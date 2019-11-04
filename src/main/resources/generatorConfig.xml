@@ -42,8 +42,12 @@
         <javaClientGenerator type="XMLMAPPER" targetPackage="com.yb.onlineexamserver.mbg.mapper"
                              targetProject=".\src\main\java"/>
         <!--生成全部表tableName设为%-->
-        <table tableName="%">
-        <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        <!--<table tableName="%">-->
+        <!--<generatedKey column="id" sqlStatement="MySql" identity="true"/>-->
+        <!--</table>-->
+        <table tableName="subject" domainObjectName="Subject">
+            <columnOverride column="create_time" javaType="java.time.LocalDateTime"/>
+            <columnOverride column="update_time" javaType="java.time.LocalDateTime"/>
         </table>
     </context>
 </generatorConfiguration>

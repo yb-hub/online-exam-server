@@ -10,7 +10,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum OnlineExamExceptionEnum {
+public enum OnlineExamExceptionEnum implements IErrorCode {
    ;
 
     private int code;

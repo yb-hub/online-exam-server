@@ -8,6 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
  * @Description:
  */
 @RestController
-public class TCourseController {
+public class TeacherCourseController {
 
 }

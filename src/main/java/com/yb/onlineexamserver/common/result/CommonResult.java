@@ -1,6 +1,6 @@
 package com.yb.onlineexamserver.common.result;
 
-import com.yb.onlineexamserver.common.enums.OnlineExamExceptionEnum;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
 public class CommonResult<T> {
     private int code;
     private String message;
+    @JsonInclude(value = JsonInclude.Include.NON_NULL)
     private T data;
 
     public CommonResult(int code,String message){
@@ -23,9 +24,14 @@ public class CommonResult<T> {
         this.message =message;
     }
 
+    public static CommonResult success(){
+        return new CommonResult(200,"成功");
+    }
+
     public static <T> CommonResult<T> success(T data) {
         return new CommonResult<T>(200, "成功", data);
     }
+
 
     public static CommonResult fail(int code,String message){
         return new CommonResult(code,message);

@@ -1,5 +1,6 @@
 package com.yb.onlineexamserver.common.exception;
 
+import com.yb.onlineexamserver.common.enums.IErrorCode;
 import com.yb.onlineexamserver.common.enums.OnlineExamExceptionEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,7 +16,7 @@ public class OnlineExamException extends Exception {
     private int code;
     private String message;
 
-    public OnlineExamException(OnlineExamExceptionEnum examExceptionEnum){
+    public OnlineExamException(IErrorCode examExceptionEnum){
         this.code = examExceptionEnum.getCode();
         this.message = examExceptionEnum.getMessage();
     }
