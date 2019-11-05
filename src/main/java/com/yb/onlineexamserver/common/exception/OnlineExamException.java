@@ -12,7 +12,7 @@ import lombok.Data;
  */
 @Data
 @AllArgsConstructor
-public class OnlineExamException extends Exception {
+public class OnlineExamException extends RuntimeException {
     private int code;
     private String message;
 

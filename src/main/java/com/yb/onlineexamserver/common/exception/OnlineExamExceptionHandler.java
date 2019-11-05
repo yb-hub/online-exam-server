@@ -1,6 +1,8 @@
 package com.yb.onlineexamserver.common.exception;
 
 import com.yb.onlineexamserver.common.result.CommonResult;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -11,8 +13,15 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
  */
 @RestControllerAdvice
 public class OnlineExamExceptionHandler {
+    //处理公告异常
     @ExceptionHandler(OnlineExamException.class)
-    public CommonResult handler(OnlineExamException e){
+    public CommonResult handler(OnlineExamException e) {
         return CommonResult.fail(e.getCode(), e.getMessage());
+    }
+
+    //处理参数异常
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public CommonResult handler(MethodArgumentNotValidException e) {
+        return CommonResult.fail(400, e.getBindingResult().getFieldError().getDefaultMessage());
     }
 }

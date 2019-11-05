@@ -13,7 +13,8 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum SubjectEnums implements IErrorCode {
-    SUBJECT_IS_EXIST(601,"科目已存在");
+    SUBJECT_IS_EXIST(601,"科目已存在"),
+    SUBJECT_NOT_FOUND(602,"科目不存在");
     int code;
     String message;
 }
