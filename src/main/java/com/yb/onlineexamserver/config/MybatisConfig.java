@@ -9,6 +9,6 @@ import org.springframework.context.annotation.Configuration;
  * @Description: mybatis配置类
  */
 @Configuration
-@MapperScan("com.yb.onlineexamserver.mbg.mapper")
+@MapperScan({"com.yb.onlineexamserver.mbg.mapper","com.yb.onlineexamserver.dao"})
 public class MybatisConfig {
 }

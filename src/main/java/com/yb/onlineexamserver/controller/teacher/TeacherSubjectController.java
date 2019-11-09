@@ -30,7 +30,8 @@ public class TeacherSubjectController {
         return CommonResult.success();
     }
 
-    @DeleteMapping("/subjects/{id}")
+    @DeleteMapping("/subjects/{id}" +
+            "")
     public CommonResult deleteSubjects(@PathVariable("id") Integer id){
         teacherSubjectService.deleteSubjectsById(id);
         return CommonResult.success();
