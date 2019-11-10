@@ -6,5 +6,5 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface MajorDao {
-    List<MajorDto> queryMajors(@Param("name") String name);
+    List<MajorDto> queryMajors(@Param("name") String name,@Param("subjectId") Integer subjectId);
 }

@@ -3,6 +3,7 @@ package com.yb.onlineexamserver.controller.teacher;
 import com.github.pagehelper.Page;
 import com.yb.onlineexamserver.common.exception.OnlineExamException;
 import com.yb.onlineexamserver.common.result.CommonResult;
+import com.yb.onlineexamserver.dto.SubjectSimpleDto;
 import com.yb.onlineexamserver.mbg.model.Subject;
 import com.yb.onlineexamserver.requestparams.SubjectParams;
 import com.yb.onlineexamserver.service.teacher.TeacherSubjectService;
@@ -49,6 +50,12 @@ public class TeacherSubjectController {
                                       @RequestParam("pageSize") Integer pageSize) {
         Page<Subject> subjects = teacherSubjectService.querySubjects(name, page, pageSize);
         return new CommonResult<Subject>().successList(subjects);
+    }
+
+    @GetMapping("/subjects/simple")
+    public CommonResult querySubjectsSimple(){
+        List<SubjectSimpleDto> subjectSimpleDtos = teacherSubjectService.querySubjectsSimple();
+        return CommonResult.success(subjectSimpleDtos);
     }
 
 }

@@ -10,6 +10,9 @@
         <if test="name !=null">
            and major.name like concat('%',#{name},'%')
         </if>
+        <if test="subjectId !=null">
+           and major.subject_id = #{subjectId}
+        </if>
 
     </select>
 </mapper>

@@ -4,6 +4,8 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.yb.onlineexamserver.common.enums.subjectenums.SubjectEnums;
 import com.yb.onlineexamserver.common.exception.OnlineExamException;
+import com.yb.onlineexamserver.dao.SubjectDao;
+import com.yb.onlineexamserver.dto.SubjectSimpleDto;
 import com.yb.onlineexamserver.mbg.mapper.SubjectMapper;
 import com.yb.onlineexamserver.mbg.model.Subject;
 import com.yb.onlineexamserver.mbg.model.SubjectExample;
@@ -28,6 +30,8 @@ public class TeacherSubjectServiceImpl implements TeacherSubjectService {
 
     @Autowired
     private SubjectMapper subjectMapper;
+    @Autowired
+    private SubjectDao subjectDao;
 
     @Override
     public int insertSubjects(SubjectParams subjectParams){
@@ -81,4 +85,8 @@ public class TeacherSubjectServiceImpl implements TeacherSubjectService {
         return subjects.size()!=0;
     }
 
+    @Override
+    public List<SubjectSimpleDto> querySubjectsSimple() {
+        return subjectDao.querySubjectsSimple();
+    }
 }
