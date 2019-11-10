@@ -88,20 +88,22 @@ public class TeacherMajorServiceImpl implements TeacherMajorService {
     }
 
     @Override
-    public Page<MajorDto> queryMajors(String name, Integer page, Integer pageSize) {
+    public Page<MajorDto> queryMajors(String name,Integer subjectId, Integer page, Integer pageSize) {
 //        MajorExample example = new MajorExample();
 //        if(!StringUtils.isEmpty(name)){
 //            example.createCriteria().andNameLike("%"+name+"%");
 //        }
         PageHelper.startPage(page, pageSize);
         Page<MajorDto> majorDtos = (Page<MajorDto>) majorDao.queryMajors(name);
-//        majorDtos = (Page<MajorDto>) majorDtos.stream().filter(majorDto -> {
-//            if(!StringUtils.isEmpty(name)){
-//                return majorDto.getName().contains(name);
-//            }else{
-//                return true;
-//            }
-//        }).collect(Collectors.toList());
+        majorDtos = (Page<MajorDto>) majorDtos.stream().filter(majorDto -> {
+            if(!StringUtils.isEmpty(name)){
+                return majorDto.getName().contains(name);
+            }
+            if(subjectId != null){
+                return (majorDto.getSubjectId() == subjectId);
+            }
+            return true;
+        }).collect(Collectors.toList());
 //        Page<Major> majors = (Page<Major>) majorMapper.selectByExample(example);
 //        Page<MajorDto> majorDtos = (Page<MajorDto>) majors.stream().map(major -> convert(major)).collect(Collectors.toList());
         return majorDtos;

@@ -15,5 +15,5 @@ public interface TeacherMajorService {
 
     int updateMajors(Integer id, MajorParams majorParams);
 
-    List<MajorDto> queryMajors(String name, Integer page, Integer pageSize);
+    List<MajorDto> queryMajors(String name, Integer subjectId, Integer page, Integer pageSize);
 }

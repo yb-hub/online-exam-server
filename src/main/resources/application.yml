@@ -21,15 +21,12 @@ spring:
       time-between-eviction-runs-millis:  60000
       filters:  stat,wall
 
-#��ӡsql
 logging:
   level:
     com.yb.onlineexamserver.mbg.mapper: debug
 
-#����mybatis��mapperӳ���ļ�λ��
 mybatis:
   mapper-locations:
-  - classpath:com/yb/onlineexamserver/mbg/mapper/*.xml #不用配置也可以，因为编译后mapper和xml在同一个文件夹下
-
+    - classpath:com/yb/onlineexamserver/mbg/mapper/*.xml
   configuration:
-    map-underscore-to-camel-case: true  #使用驼峰命名
+    map-underscore-to-camel-case: true

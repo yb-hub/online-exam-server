@@ -37,8 +37,9 @@ public class TeacherMajorController {
 
     @GetMapping("/majors")
     public CommonResult queryMajors(@RequestParam(value = "name",required = false) String name,
+                                    @RequestParam(value = "subjectId",required = false) Integer subjectId,
                                     @RequestParam(value = "page",defaultValue = "1") Integer page,
                                     @RequestParam(value = "pageSized",defaultValue = "10") Integer pageSize){
-        return CommonResult.successList(teacherMajorService.queryMajors(name,page,pageSize));
+        return CommonResult.successList(teacherMajorService.queryMajors(name,subjectId,page,pageSize));
     }
 }

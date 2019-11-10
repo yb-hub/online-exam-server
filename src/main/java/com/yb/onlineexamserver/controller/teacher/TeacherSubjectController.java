@@ -25,29 +25,28 @@ public class TeacherSubjectController {
     private TeacherSubjectService teacherSubjectService;
 
     @PostMapping("/subjects")
-    public CommonResult insertSubjects(@RequestBody @Valid SubjectParams subjectParams){
+    public CommonResult insertSubjects(@RequestBody @Valid SubjectParams subjectParams) {
         teacherSubjectService.insertSubjects(subjectParams);
         return CommonResult.success();
     }
 
-    @DeleteMapping("/subjects/{id}" +
-            "")
-    public CommonResult deleteSubjects(@PathVariable("id") Integer id){
+    @DeleteMapping("/subjects/{id}")
+    public CommonResult deleteSubjects(@PathVariable("id") Integer id) {
         teacherSubjectService.deleteSubjectsById(id);
         return CommonResult.success();
     }
 
     @PutMapping("/subjects/{id}")
     public CommonResult updateSubjects(@PathVariable("id") Integer id,
-            @RequestBody @Valid SubjectParams subjectParams){
-        teacherSubjectService.updateSubjects(id,subjectParams);
+                                       @RequestBody @Valid SubjectParams subjectParams) {
+        teacherSubjectService.updateSubjects(id, subjectParams);
         return CommonResult.success();
     }
 
     @GetMapping("/subjects")
-    public CommonResult querySubjects(@RequestParam(value = "name",required = false) String name,
-                                                     @RequestParam("page") Integer page,
-                                                     @RequestParam("pageSize") Integer pageSize){
+    public CommonResult querySubjects(@RequestParam(value = "name", required = false) String name,
+                                      @RequestParam("page") Integer page,
+                                      @RequestParam("pageSize") Integer pageSize) {
         Page<Subject> subjects = teacherSubjectService.querySubjects(name, page, pageSize);
         return new CommonResult<Subject>().successList(subjects);
     }
