@@ -49,7 +49,12 @@
             <!--<columnOverride column="create_time" javaType="java.time.LocalDateTime"/>-->
             <!--<columnOverride column="update_time" javaType="java.time.LocalDateTime"/>-->
         <!--</table>-->
-        <table tableName="major" domainObjectName="Major">
+        <!--<table tableName="major" domainObjectName="Major">-->
+            <!--<columnOverride column="create_time" javaType="java.time.LocalDateTime"/>-->
+            <!--<columnOverride column="update_time" javaType="java.time.LocalDateTime"/>-->
+        <!--</table>-->
+        <table tableName="course" domainObjectName="Course">
+            <columnOverride column="credit" javaType="java.math.BigDecimal"></columnOverride>
             <columnOverride column="create_time" javaType="java.time.LocalDateTime"/>
             <columnOverride column="update_time" javaType="java.time.LocalDateTime"/>
         </table>

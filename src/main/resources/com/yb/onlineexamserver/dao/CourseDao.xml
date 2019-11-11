@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yb.onlineexamserver.dao.CourseDao">
+    <select id="queryMajors" resultType="com.yb.onlineexamserver.dto.MajorDto">
+        select course.*,major.name majorName
+        from course
+        left join major
+        on course.major_id = major.id
+        where 1=1
+        <if test="name !=null">
+            and course.name like concat('%',#{name},'%')
+        </if>
+        <if test="majorId !=null">
+            and course.major_Id = #{majorId}
+        </if>
+
+    </select>
+</mapper>
