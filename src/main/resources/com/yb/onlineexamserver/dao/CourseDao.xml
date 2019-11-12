@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yb.onlineexamserver.dao.CourseDao">
-    <select id="queryMajors" resultType="com.yb.onlineexamserver.dto.MajorDto">
+    <select id="queryCourses" resultType="com.yb.onlineexamserver.dto.CourseDto">
         select course.*,major.name majorName
         from course
         left join major

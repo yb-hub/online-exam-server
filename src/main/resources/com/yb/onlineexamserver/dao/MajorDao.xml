@@ -15,4 +15,9 @@
         </if>
 
     </select>
+
+    <select id="queryMajorsSimple" resultType="com.yb.onlineexamserver.dto.MajorSimpleDto">
+        select id,name
+        from major
+    </select>
 </mapper>

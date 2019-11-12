@@ -24,6 +24,7 @@ spring:
 logging:
   level:
     com.yb.onlineexamserver.mbg.mapper: debug
+    com.yb.onlineexamserver.dao: debug
 
 mybatis:
   mapper-locations:

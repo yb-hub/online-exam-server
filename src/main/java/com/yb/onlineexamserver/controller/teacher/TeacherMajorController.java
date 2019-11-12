@@ -1,10 +1,13 @@
 package com.yb.onlineexamserver.controller.teacher;
 
 import com.yb.onlineexamserver.common.result.CommonResult;
+import com.yb.onlineexamserver.dto.MajorSimpleDto;
 import com.yb.onlineexamserver.requestparams.MajorParams;
 import com.yb.onlineexamserver.service.teacher.TeacherMajorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @Auther: Yang
@@ -41,5 +44,11 @@ public class TeacherMajorController {
                                     @RequestParam(value = "page",defaultValue = "1") Integer page,
                                     @RequestParam(value = "pageSized",defaultValue = "10") Integer pageSize){
         return CommonResult.successList(teacherMajorService.queryMajors(name,subjectId,page,pageSize));
+    }
+
+    @GetMapping("/majors/simple")
+    public CommonResult queryMajorsSimple(){
+        List<MajorSimpleDto> majorSimpleDtos = teacherMajorService.queryMajorsSimple();
+        return CommonResult.success(majorSimpleDtos);
     }
 }

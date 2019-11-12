@@ -41,7 +41,7 @@ public class TeacherCourseController {
 
     @GetMapping("/courses")
     public CommonResult queryCourses(@RequestParam(value = "name",required = false) String name,
-                                     @RequestParam(value = "majorId") Integer majorId,
+                                     @RequestParam(value = "majorId",required = false) Integer majorId,
                                      @RequestParam(value = "page",defaultValue = "1") Integer page,
                                      @RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize){
         Page<CourseDto> courseDtos = teacherCourseService.queryCourses(name, majorId, page, pageSize);

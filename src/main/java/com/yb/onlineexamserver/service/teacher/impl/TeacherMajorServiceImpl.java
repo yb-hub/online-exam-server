@@ -8,6 +8,7 @@ import com.yb.onlineexamserver.common.enums.subjectenums.SubjectEnums;
 import com.yb.onlineexamserver.common.exception.OnlineExamException;
 import com.yb.onlineexamserver.dao.MajorDao;
 import com.yb.onlineexamserver.dto.MajorDto;
+import com.yb.onlineexamserver.dto.MajorSimpleDto;
 import com.yb.onlineexamserver.mbg.mapper.MajorMapper;
 import com.yb.onlineexamserver.mbg.mapper.SubjectMapper;
 import com.yb.onlineexamserver.mbg.model.Major;
@@ -109,6 +110,11 @@ public class TeacherMajorServiceImpl implements TeacherMajorService {
 //        Page<Major> majors = (Page<Major>) majorMapper.selectByExample(example);
 //        Page<MajorDto> majorDtos = (Page<MajorDto>) majors.stream().map(major -> convert(major)).collect(Collectors.toList());
         return majorDtos;
+    }
+
+    @Override
+    public List<MajorSimpleDto> queryMajorsSimple() {
+       return majorDao.queryMajorsSimple();
     }
 
 }

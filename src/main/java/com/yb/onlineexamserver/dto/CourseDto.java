@@ -3,6 +3,7 @@ package com.yb.onlineexamserver.dto;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 /**
  * @Auther: Yang
@@ -23,5 +24,9 @@ public class CourseDto {
     private BigDecimal credit;
 
     private String remark;
+
+    private LocalDateTime createTime;
+
+    private LocalDateTime updateTime;
 
 }
