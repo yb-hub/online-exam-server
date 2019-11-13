@@ -53,10 +53,14 @@
             <!--<columnOverride column="create_time" javaType="java.time.LocalDateTime"/>-->
             <!--<columnOverride column="update_time" javaType="java.time.LocalDateTime"/>-->
         <!--</table>-->
-        <table tableName="course" domainObjectName="Course">
-            <columnOverride column="credit" javaType="java.math.BigDecimal"></columnOverride>
-            <columnOverride column="create_time" javaType="java.time.LocalDateTime"/>
-            <columnOverride column="update_time" javaType="java.time.LocalDateTime"/>
+        <!--<table tableName="course" domainObjectName="Course">-->
+            <!--<columnOverride column="credit" javaType="java.math.BigDecimal"></columnOverride>-->
+            <!--<columnOverride column="create_time" javaType="java.time.LocalDateTime"/>-->
+            <!--<columnOverride column="update_time" javaType="java.time.LocalDateTime"/>-->
+        <!--</table>-->
+        <table tableName="question" domainObjectName="Question">
+            <columnOverride column="create_time" javaType="java.time.LocalDateTime"></columnOverride>
+            <columnOverride column="update_time" javaType="java.time.LocalDateTime"></columnOverride>
         </table>
     </context>
 </generatorConfiguration>

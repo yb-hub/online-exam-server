@@ -11,6 +11,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum OnlineExamExceptionEnum implements IErrorCode {
+    BAD_ARGUMENT(400,"参数异常")
    ;
 
     private int code;
