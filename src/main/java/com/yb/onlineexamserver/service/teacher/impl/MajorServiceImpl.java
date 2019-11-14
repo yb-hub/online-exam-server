@@ -12,19 +12,15 @@ import com.yb.onlineexamserver.dto.MajorSimpleDto;
 import com.yb.onlineexamserver.mbg.mapper.MajorMapper;
 import com.yb.onlineexamserver.mbg.mapper.SubjectMapper;
 import com.yb.onlineexamserver.mbg.model.Major;
-import com.yb.onlineexamserver.mbg.model.MajorExample;
 import com.yb.onlineexamserver.mbg.model.Subject;
 import com.yb.onlineexamserver.requestparams.MajorParams;
-import com.yb.onlineexamserver.service.teacher.TeacherMajorService;
+import com.yb.onlineexamserver.service.teacher.MajorService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @Auther: Yang
@@ -33,7 +29,7 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @Service
-public class TeacherMajorServiceImpl implements TeacherMajorService {
+public class MajorServiceImpl implements MajorService {
 
     @Autowired
     private SubjectMapper subjectMapper;

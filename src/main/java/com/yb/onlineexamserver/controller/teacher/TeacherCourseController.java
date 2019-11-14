@@ -4,7 +4,7 @@ import com.github.pagehelper.Page;
 import com.yb.onlineexamserver.common.result.CommonResult;
 import com.yb.onlineexamserver.dto.CourseDto;
 import com.yb.onlineexamserver.requestparams.CourseParams;
-import com.yb.onlineexamserver.service.teacher.TeacherCourseService;
+import com.yb.onlineexamserver.service.teacher.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,23 +19,23 @@ import javax.validation.Valid;
 public class TeacherCourseController {
 
     @Autowired
-    private TeacherCourseService teacherCourseService;
+    private CourseService courseService;
 
     @PostMapping("/courses")
     public CommonResult insertCourses(@RequestBody CourseParams courseParams){
-        teacherCourseService.insertCourses(courseParams);
+        courseService.insertCourses(courseParams);
         return CommonResult.success();
     }
 
     @DeleteMapping("/courses/{id}")
     public CommonResult deleteCourses(@PathVariable("id") Integer id){
-        teacherCourseService.deleteCourses(id);
+        courseService.deleteCourses(id);
         return CommonResult.success();
     }
 
     @PutMapping("/courses/{id}")
     public CommonResult updateCourses(@PathVariable("id") Integer id,@RequestBody @Valid CourseParams courseParams){
-        teacherCourseService.updateCourses(id,courseParams);
+        courseService.updateCourses(id,courseParams);
         return CommonResult.success();
     }
 
@@ -44,7 +44,7 @@ public class TeacherCourseController {
                                      @RequestParam(value = "majorId",required = false) Integer majorId,
                                      @RequestParam(value = "page",defaultValue = "1") Integer page,
                                      @RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize){
-        Page<CourseDto> courseDtos = teacherCourseService.queryCourses(name, majorId, page, pageSize);
+        Page<CourseDto> courseDtos = courseService.queryCourses(name, majorId, page, pageSize);
         return CommonResult.successList(courseDtos);
     }
 }

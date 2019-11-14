@@ -7,7 +7,7 @@ import com.yb.onlineexamserver.requestparams.MajorParams;
 
 import java.util.List;
 
-public interface TeacherMajorService {
+public interface MajorService {
     int insertMajors(MajorParams majorParams);
 
     int deleteMajors(Integer id);

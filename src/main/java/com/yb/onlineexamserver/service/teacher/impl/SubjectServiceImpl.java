@@ -10,14 +10,12 @@ import com.yb.onlineexamserver.mbg.mapper.SubjectMapper;
 import com.yb.onlineexamserver.mbg.model.Subject;
 import com.yb.onlineexamserver.mbg.model.SubjectExample;
 import com.yb.onlineexamserver.requestparams.SubjectParams;
-import com.yb.onlineexamserver.service.teacher.TeacherSubjectService;
+import com.yb.onlineexamserver.service.teacher.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import javax.xml.crypto.Data;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -26,7 +24,7 @@ import java.util.List;
  * @Description:
  */
 @Service
-public class TeacherSubjectServiceImpl implements TeacherSubjectService {
+public class SubjectServiceImpl implements SubjectService {
 
     @Autowired
     private SubjectMapper subjectMapper;

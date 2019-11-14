@@ -3,7 +3,6 @@ package com.yb.onlineexamserver.service.teacher.impl;
 import cn.hutool.core.bean.BeanUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.yb.onlineexamserver.common.enums.OnlineExamExceptionEnum;
 import com.yb.onlineexamserver.common.enums.courseenums.CourseEnums;
 import com.yb.onlineexamserver.common.enums.majorenums.MajorEnums;
 import com.yb.onlineexamserver.common.exception.OnlineExamException;
@@ -14,7 +13,7 @@ import com.yb.onlineexamserver.mbg.mapper.MajorMapper;
 import com.yb.onlineexamserver.mbg.model.Course;
 import com.yb.onlineexamserver.mbg.model.Major;
 import com.yb.onlineexamserver.requestparams.CourseParams;
-import com.yb.onlineexamserver.service.teacher.TeacherCourseService;
+import com.yb.onlineexamserver.service.teacher.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +25,7 @@ import java.time.LocalDateTime;
  * @Description:
  */
 @Service
-public class TeacherCourseServiceImpl implements TeacherCourseService {
+public class CourseServiceImpl implements CourseService {
     @Autowired
     private CourseMapper courseMapper;
     @Autowired

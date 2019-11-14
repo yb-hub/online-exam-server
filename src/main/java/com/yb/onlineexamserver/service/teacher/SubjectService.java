@@ -7,7 +7,7 @@ import com.yb.onlineexamserver.mbg.model.Subject;
 import com.yb.onlineexamserver.requestparams.SubjectParams;
 import java.util.List;
 
-public interface TeacherSubjectService {
+public interface SubjectService {
     int insertSubjects(SubjectParams subjectParams) throws OnlineExamException;
 
     int deleteSubjectsById(Integer id);

@@ -3,7 +3,7 @@ package com.yb.onlineexamserver.controller.teacher;
 import com.yb.onlineexamserver.common.result.CommonResult;
 import com.yb.onlineexamserver.dto.MajorSimpleDto;
 import com.yb.onlineexamserver.requestparams.MajorParams;
-import com.yb.onlineexamserver.service.teacher.TeacherMajorService;
+import com.yb.onlineexamserver.service.teacher.MajorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,23 +18,23 @@ import java.util.List;
 public class TeacherMajorController {
 
     @Autowired
-    private TeacherMajorService teacherMajorService;
+    private MajorService majorService;
 
     @PostMapping("/majors")
     public CommonResult insertMajors(@RequestBody MajorParams majorParams){
-        teacherMajorService.insertMajors(majorParams);
+        majorService.insertMajors(majorParams);
         return CommonResult.success();
     }
 
     @DeleteMapping("/majors/{id}")
     public CommonResult deleteMajors(@PathVariable("id") Integer id){
-        teacherMajorService.deleteMajors(id);
+        majorService.deleteMajors(id);
         return CommonResult.success();
     }
 
     @PutMapping("/majors/{id}")
     public CommonResult updateMajors(@PathVariable("id") Integer id,@RequestBody MajorParams majorParams){
-        teacherMajorService.updateMajors(id,majorParams);
+        majorService.updateMajors(id,majorParams);
         return CommonResult.success();
     }
 
@@ -43,12 +43,12 @@ public class TeacherMajorController {
                                     @RequestParam(value = "subjectId",required = false) Integer subjectId,
                                     @RequestParam(value = "page",defaultValue = "1") Integer page,
                                     @RequestParam(value = "pageSized",defaultValue = "10") Integer pageSize){
-        return CommonResult.successList(teacherMajorService.queryMajors(name,subjectId,page,pageSize));
+        return CommonResult.successList(majorService.queryMajors(name,subjectId,page,pageSize));
     }
 
     @GetMapping("/majors/simple")
     public CommonResult queryMajorsSimple(){
-        List<MajorSimpleDto> majorSimpleDtos = teacherMajorService.queryMajorsSimple();
+        List<MajorSimpleDto> majorSimpleDtos = majorService.queryMajorsSimple();
         return CommonResult.success(majorSimpleDtos);
     }
 }
