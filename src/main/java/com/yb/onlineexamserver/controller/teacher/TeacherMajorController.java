@@ -1,7 +1,7 @@
 package com.yb.onlineexamserver.controller.teacher;
 
 import com.yb.onlineexamserver.common.result.CommonResult;
-import com.yb.onlineexamserver.dto.MajorSimpleDto;
+import com.yb.onlineexamserver.vo.MajorSimpleVo;
 import com.yb.onlineexamserver.requestparams.MajorParams;
 import com.yb.onlineexamserver.service.teacher.MajorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +48,7 @@ public class TeacherMajorController {
 
     @GetMapping("/majors/simple")
     public CommonResult queryMajorsSimple(){
-        List<MajorSimpleDto> majorSimpleDtos = majorService.queryMajorsSimple();
-        return CommonResult.success(majorSimpleDtos);
+        List<MajorSimpleVo> majorSimpleVos = majorService.queryMajorsSimple();
+        return CommonResult.success(majorSimpleVos);
     }
 }

@@ -7,7 +7,7 @@ import com.yb.onlineexamserver.common.enums.courseenums.CourseEnums;
 import com.yb.onlineexamserver.common.enums.majorenums.MajorEnums;
 import com.yb.onlineexamserver.common.exception.OnlineExamException;
 import com.yb.onlineexamserver.dao.CourseDao;
-import com.yb.onlineexamserver.dto.CourseDto;
+import com.yb.onlineexamserver.vo.CourseVo;
 import com.yb.onlineexamserver.mbg.mapper.CourseMapper;
 import com.yb.onlineexamserver.mbg.mapper.MajorMapper;
 import com.yb.onlineexamserver.mbg.model.Course;
@@ -74,9 +74,9 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Page<CourseDto> queryCourses(String name, Integer majorId, Integer page, Integer pageSize) {
+    public Page<CourseVo> queryCourses(String name, Integer majorId, Integer page, Integer pageSize) {
         PageHelper.startPage(page, pageSize);
-        Page<CourseDto> courseDtos = (Page<CourseDto>) courseDao.queryCourses(name,majorId);
-        return courseDtos;
+        Page<CourseVo> courseVos = (Page<CourseVo>) courseDao.queryCourses(name,majorId);
+        return courseVos;
     }
 }

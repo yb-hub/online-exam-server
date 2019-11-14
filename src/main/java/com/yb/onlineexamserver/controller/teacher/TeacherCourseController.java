@@ -2,7 +2,7 @@ package com.yb.onlineexamserver.controller.teacher;
 
 import com.github.pagehelper.Page;
 import com.yb.onlineexamserver.common.result.CommonResult;
-import com.yb.onlineexamserver.dto.CourseDto;
+import com.yb.onlineexamserver.vo.CourseVo;
 import com.yb.onlineexamserver.requestparams.CourseParams;
 import com.yb.onlineexamserver.service.teacher.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +44,7 @@ public class TeacherCourseController {
                                      @RequestParam(value = "majorId",required = false) Integer majorId,
                                      @RequestParam(value = "page",defaultValue = "1") Integer page,
                                      @RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize){
-        Page<CourseDto> courseDtos = courseService.queryCourses(name, majorId, page, pageSize);
-        return CommonResult.successList(courseDtos);
+        Page<CourseVo> courseVos = courseService.queryCourses(name, majorId, page, pageSize);
+        return CommonResult.successList(courseVos);
     }
 }

@@ -1,6 +1,6 @@
 package com.yb.onlineexamserver.requestparams;
 
-import com.yb.onlineexamserver.vo.QuestionOption;
+import com.yb.onlineexamserver.dto.QuestionOption;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
@@ -23,7 +23,7 @@ public class QuestionParam {
 
     private List<QuestionOption> options;
 
-    private List<QuestionOption> rightOption;
+    private List<String> rightOption;
 
     private Integer judgeAnswer;
     @NotNull(message = "题目分值不能为空")

@@ -1,4 +1,4 @@
-package com.yb.onlineexamserver.dto;
+package com.yb.onlineexamserver.vo;
 
 import lombok.Data;
 
@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
  * @Description:
  */
 @Data
-public class MajorDto {
+public class MajorVo {
 
     private Integer id;
 

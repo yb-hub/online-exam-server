@@ -1,21 +1,16 @@
-package com.yb.onlineexamserver.mbg.model;
+package com.yb.onlineexamserver.vo;
 
-import java.io.Serializable;
-import java.time.LocalDateTime;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
 
 /**
-* Created by Mybatis Generator on 2019/11/13
-*/
+ * @Auther: Yang
+ * @Date: 2019/11/14 10:28
+ * @Description:
+ */
 @Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class Question implements Serializable {
-
+public class QuestionVo {
     private String id;
 
     private Integer courseId;
@@ -40,5 +35,4 @@ public class Question implements Serializable {
 
     private LocalDateTime updateTime;
 
-    private static final long serialVersionUID = 1L;
 }

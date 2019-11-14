@@ -7,8 +7,8 @@ import com.yb.onlineexamserver.common.enums.majorenums.MajorEnums;
 import com.yb.onlineexamserver.common.enums.subjectenums.SubjectEnums;
 import com.yb.onlineexamserver.common.exception.OnlineExamException;
 import com.yb.onlineexamserver.dao.MajorDao;
-import com.yb.onlineexamserver.dto.MajorDto;
-import com.yb.onlineexamserver.dto.MajorSimpleDto;
+import com.yb.onlineexamserver.vo.MajorVo;
+import com.yb.onlineexamserver.vo.MajorSimpleVo;
 import com.yb.onlineexamserver.mbg.mapper.MajorMapper;
 import com.yb.onlineexamserver.mbg.mapper.SubjectMapper;
 import com.yb.onlineexamserver.mbg.model.Major;
@@ -85,14 +85,14 @@ public class MajorServiceImpl implements MajorService {
     }
 
     @Override
-    public Page<MajorDto> queryMajors(String name,Integer subjectId, Integer page, Integer pageSize) {
+    public Page<MajorVo> queryMajors(String name, Integer subjectId, Integer page, Integer pageSize) {
 //        MajorExample example = new MajorExample();
 //        if(!StringUtils.isEmpty(name)){
 //            example.createCriteria().andNameLike("%"+name+"%");
 //        }
         PageHelper.startPage(page, pageSize);
-        Page<MajorDto> majorDtos = (Page<MajorDto>) majorDao.queryMajors(name,subjectId);
-//        List<MajorDto> majorDtoList = majorDtos.stream().filter(majorDto -> {
+        Page<MajorVo> majorVos = (Page<MajorVo>) majorDao.queryMajors(name,subjectId);
+//        List<MajorVo> majorDtoList = majorVos.stream().filter(majorDto -> {
 //            if (!StringUtils.isEmpty(name)) {
 //                return majorDto.getName().contains(name);
 //            }
@@ -104,12 +104,12 @@ public class MajorServiceImpl implements MajorService {
 
 
 //        Page<Major> majors = (Page<Major>) majorMapper.selectByExample(example);
-//        Page<MajorDto> majorDtos = (Page<MajorDto>) majors.stream().map(major -> convert(major)).collect(Collectors.toList());
-        return majorDtos;
+//        Page<MajorVo> majorVos = (Page<MajorVo>) majors.stream().map(major -> convert(major)).collect(Collectors.toList());
+        return majorVos;
     }
 
     @Override
-    public List<MajorSimpleDto> queryMajorsSimple() {
+    public List<MajorSimpleVo> queryMajorsSimple() {
        return majorDao.queryMajorsSimple();
     }
 

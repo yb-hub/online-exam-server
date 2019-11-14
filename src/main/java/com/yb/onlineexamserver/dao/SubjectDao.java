@@ -1,9 +1,9 @@
 package com.yb.onlineexamserver.dao;
 
-import com.yb.onlineexamserver.dto.SubjectSimpleDto;
+import com.yb.onlineexamserver.vo.SubjectSimpleVo;
 
 import java.util.List;
 
 public interface SubjectDao {
-    List<SubjectSimpleDto> querySubjectsSimple();
+    List<SubjectSimpleVo> querySubjectsSimple();
 }

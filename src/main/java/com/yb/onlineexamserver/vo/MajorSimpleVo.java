@@ -1,4 +1,4 @@
-package com.yb.onlineexamserver.dto;
+package com.yb.onlineexamserver.vo;
 
 import lombok.Data;
 
@@ -8,7 +8,7 @@ import lombok.Data;
  * @Description:
  */
 @Data
-public class MajorSimpleDto {
+public class MajorSimpleVo {
     private int id;
     private String name;
 }

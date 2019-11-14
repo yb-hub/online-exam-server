@@ -1,4 +1,4 @@
-package com.yb.onlineexamserver.vo;
+package com.yb.onlineexamserver.dto;
 
 import lombok.Data;
 

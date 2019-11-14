@@ -8,10 +8,7 @@ import com.yb.onlineexamserver.requestparams.QuestionParam;
 import com.yb.onlineexamserver.service.teacher.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -29,20 +26,49 @@ public class QuestionController {
 
     @PostMapping("/questions")
     public CommonResult insertQuestions(@RequestBody @Valid QuestionParam questionParam){
+        validate(questionParam);
+        questionService.insertQuestions(questionParam);
+        return CommonResult.success();
+    }
+
+    @DeleteMapping("/questions/{id}")
+    public CommonResult deleteQuestions(@PathVariable("id") String id){
+        questionService.deleteQuestions(id);
+        return CommonResult.success();
+    }
+
+    @PutMapping("/questions/{id}")
+    public CommonResult updateQuestions(@PathVariable("id") String id,@RequestBody @Valid QuestionParam questionParam){
+        validate(questionParam);
+        questionService.updateQuestions(id,questionParam);
+        return CommonResult.success();
+    }
+
+    @GetMapping("/questions/{id}")
+    public CommonResult queryQuestionsById(@PathVariable("id") String id){
+        return CommonResult.success(questionService.queryQuestionsById(id));
+    }
+
+    @GetMapping("/questions")
+    public CommonResult queryQuestionsList(){
+        return null;
+    }
+
+
+    private void validate(QuestionParam questionParam) {
         Integer type = questionParam.getType();
         if(type == QuestionEnums.SIMPLE_QUESTION.getCode() || type == QuestionEnums.MULTI_QUESTION.getCode() ){
             if(StringUtils.isEmpty(questionParam.getOptions()) || StringUtils.isEmpty(questionParam.getRightOption())){
-                throw new OnlineExamException(OnlineExamExceptionEnum.BAD_ARGUMENT.getCode(),"选择题必须不能没有选项和答案");
+                throw new OnlineExamException(OnlineExamExceptionEnum.BAD_ARGUMENT.getCode(),"选择题不能没有选项和答案");
             }
         }
-        if(type == QuestionEnums.JUDGE_QUESTION.getCode()){
+        else if(type == QuestionEnums.JUDGE_QUESTION.getCode()){
             if(StringUtils.isEmpty(questionParam.getJudgeAnswer())){
-                throw new OnlineExamException(OnlineExamExceptionEnum.BAD_ARGUMENT.getCode(),"选择题必须不能没有选项和答案");
+                throw new OnlineExamException(OnlineExamExceptionEnum.BAD_ARGUMENT.getCode(),"选择题不能没有选项和答案");
             }
         }else{
             throw new OnlineExamException(OnlineExamExceptionEnum.BAD_ARGUMENT.getCode(),"客观题只有单选，多选和判断题");
         }
-        questionService.insertQuestions(questionParam);
-        return CommonResult.success();
     }
+
 }

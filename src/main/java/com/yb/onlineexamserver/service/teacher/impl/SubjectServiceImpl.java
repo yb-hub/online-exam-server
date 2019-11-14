@@ -5,7 +5,7 @@ import com.github.pagehelper.PageHelper;
 import com.yb.onlineexamserver.common.enums.subjectenums.SubjectEnums;
 import com.yb.onlineexamserver.common.exception.OnlineExamException;
 import com.yb.onlineexamserver.dao.SubjectDao;
-import com.yb.onlineexamserver.dto.SubjectSimpleDto;
+import com.yb.onlineexamserver.vo.SubjectSimpleVo;
 import com.yb.onlineexamserver.mbg.mapper.SubjectMapper;
 import com.yb.onlineexamserver.mbg.model.Subject;
 import com.yb.onlineexamserver.mbg.model.SubjectExample;
@@ -84,7 +84,7 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
-    public List<SubjectSimpleDto> querySubjectsSimple() {
+    public List<SubjectSimpleVo> querySubjectsSimple() {
         return subjectDao.querySubjectsSimple();
     }
 }

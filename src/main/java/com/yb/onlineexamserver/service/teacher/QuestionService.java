@@ -1,5 +1,6 @@
 package com.yb.onlineexamserver.service.teacher;
 
+import com.yb.onlineexamserver.mbg.model.Question;
 import com.yb.onlineexamserver.requestparams.QuestionParam;
 
 /**
@@ -9,4 +10,10 @@ import com.yb.onlineexamserver.requestparams.QuestionParam;
  */
 public interface QuestionService {
     int insertQuestions(QuestionParam questionParam);
+
+    int deleteQuestions(String id);
+
+    Question queryQuestionsById(String id);
+
+    int updateQuestions(String id, QuestionParam questionParam);
 }

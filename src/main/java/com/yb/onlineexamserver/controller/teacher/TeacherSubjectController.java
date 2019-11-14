@@ -2,7 +2,7 @@ package com.yb.onlineexamserver.controller.teacher;
 
 import com.github.pagehelper.Page;
 import com.yb.onlineexamserver.common.result.CommonResult;
-import com.yb.onlineexamserver.dto.SubjectSimpleDto;
+import com.yb.onlineexamserver.vo.SubjectSimpleVo;
 import com.yb.onlineexamserver.mbg.model.Subject;
 import com.yb.onlineexamserver.requestparams.SubjectParams;
 import com.yb.onlineexamserver.service.teacher.SubjectService;
@@ -52,8 +52,8 @@ public class TeacherSubjectController {
 
     @GetMapping("/subjects/simple")
     public CommonResult querySubjectsSimple(){
-        List<SubjectSimpleDto> subjectSimpleDtos = subjectService.querySubjectsSimple();
-        return CommonResult.success(subjectSimpleDtos);
+        List<SubjectSimpleVo> subjectSimpleVos = subjectService.querySubjectsSimple();
+        return CommonResult.success(subjectSimpleVos);
     }
 
 }
