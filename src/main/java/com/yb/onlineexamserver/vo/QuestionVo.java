@@ -3,6 +3,7 @@ package com.yb.onlineexamserver.vo;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @Auther: Yang
@@ -19,9 +20,9 @@ public class QuestionVo {
 
     private Integer type;
 
-    private String options;
+    private List<String> options;
 
-    private String rightOption;
+    private List<String> rightOption;
 
     private Integer judgeAnswer;
 

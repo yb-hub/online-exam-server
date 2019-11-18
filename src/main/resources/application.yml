@@ -23,7 +23,7 @@ spring:
   data:
     elasticsearch:
       cluster-name: docker-cluster
-      cluster-nodes: 192.168.31.88:9300
+      cluster-nodes: 47.99.193.37:9300
 
 
 logging:
@@ -33,6 +33,6 @@ logging:
 
 mybatis:
   mapper-locations:
-    - classpath:com/yb/onlineexamserver/mbg/mapper/*.xml
+    - classpath:com/yb/onlineexamserver/mbg/mapper/*.xml  #可以不用设置，mapper和映射文件xml包名相同
   configuration:
-    map-underscore-to-camel-case: true
+    map-underscore-to-camel-case: true  #开启驼峰命名法

@@ -2,6 +2,7 @@ package com.yb.onlineexamserver.service.teacher.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.alibaba.fastjson.JSON;
+import com.github.pagehelper.Page;
 import com.yb.onlineexamserver.common.enums.OnlineExamExceptionEnum;
 import com.yb.onlineexamserver.common.enums.courseenums.CourseEnums;
 import com.yb.onlineexamserver.common.enums.questionenums.QuestionEnums;
@@ -10,14 +11,18 @@ import com.yb.onlineexamserver.mbg.mapper.CourseMapper;
 import com.yb.onlineexamserver.mbg.mapper.QuestionMapper;
 import com.yb.onlineexamserver.mbg.model.Course;
 import com.yb.onlineexamserver.mbg.model.Question;
+import com.yb.onlineexamserver.mbg.model.QuestionExample;
 import com.yb.onlineexamserver.requestparams.QuestionParam;
+import com.yb.onlineexamserver.respository.QuestionRepository;
 import com.yb.onlineexamserver.service.teacher.QuestionService;
 import com.yb.onlineexamserver.utils.KeyUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @Auther: Yang
@@ -30,6 +35,8 @@ public class QuestionServiceImpl implements QuestionService {
     private QuestionMapper questionMapper;
     @Autowired
     private CourseMapper courseMapper;
+    @Autowired
+    private QuestionRepository questionRepository;
 
     @Override
     public int insertQuestions(QuestionParam questionParam) {
@@ -70,6 +77,17 @@ public class QuestionServiceImpl implements QuestionService {
         return questionMapper.updateByPrimaryKeySelective(question);
     }
 
+    @Override
+    public Page<Question> queryQuestionsList() {
+        System.out.println(questionRepository.findAll());
+        return null;
+    }
+
+    @Override
+    public void insertToElastic() {
+        List<Question> questions = questionMapper.selectByExample(new QuestionExample());
+        questionRepository.saveAll(questions);
+    }
 
     public void checkCourse(int courseId){
         Course course = courseMapper.selectByPrimaryKey(courseId);

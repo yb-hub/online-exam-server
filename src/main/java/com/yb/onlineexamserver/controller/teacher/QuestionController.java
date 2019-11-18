@@ -51,7 +51,14 @@ public class QuestionController {
 
     @GetMapping("/questions")
     public CommonResult queryQuestionsList(){
+        questionService.queryQuestionsList();
         return null;
+    }
+
+    @PostMapping("/questions/elasticsearch")
+    public CommonResult insertToElastic(){
+        questionService.insertToElastic();
+        return CommonResult.success();
     }
 
 
