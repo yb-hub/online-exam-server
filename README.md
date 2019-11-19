@@ -110,5 +110,24 @@ docker exec -it elasticsearch /bin/bash
 再次启动程序，会提示说找不到9300端口，可是明明就打开了啊，然后查了百度，说是要打开9200到9400的所有端口
 在阿里云上设置玩后，再次启动，终于可以了。
 
+### elasticsearch 反序列化localdatetime失败，不知道咋搞。。。
+```css
+"updateTime": {
+-"chronology": {
+"calendarType": "iso8601",
+"id": "ISO"
+},
+"dayOfMonth": 14,
+"dayOfWeek": "THURSDAY",
+"dayOfYear": 318,
+"hour": 14,
+"minute": 52,
+"month": "NOVEMBER",
+"monthValue": 11,
+"nano": 0,
+"second": 35,
+"year": 2019
+}
+```
 
  

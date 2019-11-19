@@ -25,7 +25,6 @@ spring:
       cluster-name: docker-cluster
       cluster-nodes: 47.99.193.37:9300
 
-
 logging:
   level:
     com.yb.onlineexamserver.mbg.mapper: debug
@@ -33,6 +32,6 @@ logging:
 
 mybatis:
   mapper-locations:
-    - classpath:com/yb/onlineexamserver/mbg/mapper/*.xml  #可以不用设置，mapper和映射文件xml包名相同
+    - classpath:com/yb/onlineexamserver/mbg/mapper/*.xml
   configuration:
-    map-underscore-to-camel-case: true  #开启驼峰命名法
+    map-underscore-to-camel-case: true

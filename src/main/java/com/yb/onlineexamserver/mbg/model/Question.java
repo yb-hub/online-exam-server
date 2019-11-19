@@ -3,6 +3,7 @@ package com.yb.onlineexamserver.mbg.model;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
@@ -24,20 +25,20 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Document(indexName = "onlineexam",type ="question")
+//@Document(indexName = "onlineexam",type ="question")
 public class Question implements Serializable {
 
-    @Id
+    //@Id
     private String id;
 
-    @Field(type = FieldType.Keyword)
+    //@Field(type = FieldType.Keyword)
     private Integer courseId;
 
-    @Field(type = FieldType.Text,analyzer = "ik_max_word")
+    //@Field(type = FieldType.Text,analyzer = "ik_max_word")
     private String title;
 
     private Integer type;
-    @Field(type = FieldType.Text,analyzer = "ik_max_word")
+    //@Field(type = FieldType.Text,analyzer = "ik_max_word")
     private String options;
 
     private String rightOption;

@@ -1,6 +1,6 @@
 package com.yb.onlineexamserver.service.teacher;
 
-import com.github.pagehelper.Page;
+import com.yb.onlineexamserver.dto.QuestionDto;
 import com.yb.onlineexamserver.mbg.model.Question;
 import com.yb.onlineexamserver.requestparams.QuestionParam;
 
@@ -18,7 +18,7 @@ public interface QuestionService {
 
     int updateQuestions(String id, QuestionParam questionParam);
 
-    Page<Question> queryQuestionsList();
+    Iterable<QuestionDto> queryQuestionsList(String keyWord,Integer courseId);
 
     void insertToElastic();
 }

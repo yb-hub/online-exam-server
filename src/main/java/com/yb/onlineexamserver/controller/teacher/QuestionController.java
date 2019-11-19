@@ -4,6 +4,7 @@ import com.yb.onlineexamserver.common.enums.OnlineExamExceptionEnum;
 import com.yb.onlineexamserver.common.enums.statusenums.QuestionEnums;
 import com.yb.onlineexamserver.common.exception.OnlineExamException;
 import com.yb.onlineexamserver.common.result.CommonResult;
+import com.yb.onlineexamserver.dto.QuestionDto;
 import com.yb.onlineexamserver.requestparams.QuestionParam;
 import com.yb.onlineexamserver.service.teacher.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,9 +51,10 @@ public class QuestionController {
     }
 
     @GetMapping("/questions")
-    public CommonResult queryQuestionsList(){
-        questionService.queryQuestionsList();
-        return null;
+    public CommonResult queryQuestionsList(@RequestParam(value = "keyWord",defaultValue = "",required = false) String keyWord,
+                                           @RequestParam(value = "courseId",required = false) Integer courseId){
+        Iterable<QuestionDto> questionDtos = questionService.queryQuestionsList(keyWord,courseId);
+        return CommonResult.success(questionDtos);
     }
 
     @PostMapping("/questions/elasticsearch")

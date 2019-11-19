@@ -2,11 +2,10 @@ package com.yb.onlineexamserver.service.teacher.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.alibaba.fastjson.JSON;
-import com.github.pagehelper.Page;
-import com.yb.onlineexamserver.common.enums.OnlineExamExceptionEnum;
 import com.yb.onlineexamserver.common.enums.courseenums.CourseEnums;
 import com.yb.onlineexamserver.common.enums.questionenums.QuestionEnums;
 import com.yb.onlineexamserver.common.exception.OnlineExamException;
+import com.yb.onlineexamserver.dto.QuestionDto;
 import com.yb.onlineexamserver.mbg.mapper.CourseMapper;
 import com.yb.onlineexamserver.mbg.mapper.QuestionMapper;
 import com.yb.onlineexamserver.mbg.model.Course;
@@ -16,12 +15,11 @@ import com.yb.onlineexamserver.requestparams.QuestionParam;
 import com.yb.onlineexamserver.respository.QuestionRepository;
 import com.yb.onlineexamserver.service.teacher.QuestionService;
 import com.yb.onlineexamserver.utils.KeyUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -78,15 +76,23 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public Page<Question> queryQuestionsList() {
-        System.out.println(questionRepository.findAll());
-        return null;
+    public Iterable<QuestionDto> queryQuestionsList(String keyWord,Integer courseId) {
+        //List<QuestionDto> byTitleLike = questionRepository.findByTitleLike(keyWord);
+        List<QuestionDto> byTitleLikeAndCourseId = questionRepository.findByTitleLikeAndCourseId(keyWord, courseId);
+//        return questionRepository.findAll();
+        return byTitleLikeAndCourseId;
     }
 
     @Override
     public void insertToElastic() {
         List<Question> questions = questionMapper.selectByExample(new QuestionExample());
-        questionRepository.saveAll(questions);
+        ArrayList<QuestionDto> questionDtos = new ArrayList<>();
+        for (Question question : questions) {
+            QuestionDto questionDto = new QuestionDto();
+            BeanUtil.copyProperties(question, questionDto);
+            questionDtos.add(questionDto);
+        }
+        questionRepository.saveAll(questionDtos);
     }
 
     public void checkCourse(int courseId){
