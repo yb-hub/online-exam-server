@@ -130,4 +130,27 @@ docker exec -it elasticsearch /bin/bash
 }
 ```
 
+mysql和elasticserach数据同步
+1.在docker中进入mysql
+```
+docker exec -it mysql bash
+```
+2.查看是否打开binlog增量备份功能
+```aidl
+mysql -uroot -p
+
+show variables like '%log_bin%';
+
+```
+如果没有开启的话，需要在my.cnf配置中添加如下配置(其中server-id可以根据情况设置，这里设置为1，log-bin为日志位置，一定要给日志写的权限，不然会报错，binlog_format为模式，这里必须为ROW)：
+
+root@0eee85c592f9:/etc/mysql/mysql.conf.d# vi mysqld.cnf 
+
+```aidl
+server-id=1
+log-bin=/usr/local/mysql-log/mysql-bin.log
+binlog_format=row
+```
+
+
  
