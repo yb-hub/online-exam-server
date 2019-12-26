@@ -13,6 +13,10 @@
         <if test="majorId !=null">
             and course.major_Id = #{majorId}
         </if>
+    </select>
 
+    <select id="queryCoursesSimple" resultType="com.yb.onlineexamserver.vo.CourseSimpleVo">
+        select course.id,course.name
+        from course
     </select>
 </mapper>

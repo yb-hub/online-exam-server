@@ -1,5 +1,6 @@
 package com.yb.onlineexamserver.vo;
 
+import com.yb.onlineexamserver.dto.QuestionOption;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -20,7 +21,7 @@ public class QuestionVo {
 
     private Integer type;
 
-    private List<String> options;
+    private List<QuestionOption> options;
 
     private List<String> rightOption;
 

@@ -7,12 +7,15 @@ import com.yb.onlineexamserver.common.result.CommonResult;
 import com.yb.onlineexamserver.dto.QuestionDto;
 import com.yb.onlineexamserver.requestparams.QuestionParam;
 import com.yb.onlineexamserver.service.teacher.QuestionService;
+import com.yb.onlineexamserver.vo.QuestionVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.ValidationException;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * @Auther: Yang
@@ -52,9 +55,12 @@ public class QuestionController {
 
     @GetMapping("/questions")
     public CommonResult queryQuestionsList(@RequestParam(value = "keyWord",defaultValue = "",required = false) String keyWord,
-                                           @RequestParam(value = "courseId",required = false) Integer courseId){
-        Iterable<QuestionDto> questionDtos = questionService.queryQuestionsList(keyWord,courseId);
-        return CommonResult.success(questionDtos);
+                                           @RequestParam(value = "courseId",required = false) Integer courseId,
+                                           @RequestParam(value = "page",defaultValue = "1") Integer page,
+                                           @RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize,
+                                           @RequestParam(value = "sort",defaultValue = "update_time") String sort){
+        List<QuestionVo> questionVos = questionService.queryQuestionsList(keyWord,courseId,page,pageSize,sort);
+        return CommonResult.success(questionVos);
     }
 
     @PostMapping("/questions/elasticsearch")

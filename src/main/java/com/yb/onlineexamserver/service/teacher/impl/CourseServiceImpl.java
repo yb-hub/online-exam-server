@@ -7,6 +7,7 @@ import com.yb.onlineexamserver.common.enums.courseenums.CourseEnums;
 import com.yb.onlineexamserver.common.enums.majorenums.MajorEnums;
 import com.yb.onlineexamserver.common.exception.OnlineExamException;
 import com.yb.onlineexamserver.dao.CourseDao;
+import com.yb.onlineexamserver.vo.CourseSimpleVo;
 import com.yb.onlineexamserver.vo.CourseVo;
 import com.yb.onlineexamserver.mbg.mapper.CourseMapper;
 import com.yb.onlineexamserver.mbg.mapper.MajorMapper;
@@ -18,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @Auther: Yang
@@ -78,5 +80,10 @@ public class CourseServiceImpl implements CourseService {
         PageHelper.startPage(page, pageSize);
         Page<CourseVo> courseVos = (Page<CourseVo>) courseDao.queryCourses(name,majorId);
         return courseVos;
+    }
+
+    @Override
+    public List<CourseSimpleVo> queryCoursesSimple() {
+        return courseDao.queryCoursesSimple();
     }
 }

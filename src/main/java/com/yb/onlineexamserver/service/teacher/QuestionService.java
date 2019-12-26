@@ -3,6 +3,9 @@ package com.yb.onlineexamserver.service.teacher;
 import com.yb.onlineexamserver.dto.QuestionDto;
 import com.yb.onlineexamserver.mbg.model.Question;
 import com.yb.onlineexamserver.requestparams.QuestionParam;
+import com.yb.onlineexamserver.vo.QuestionVo;
+
+import java.util.List;
 
 /**
  * @Auther: Yang
@@ -18,7 +21,8 @@ public interface QuestionService {
 
     int updateQuestions(String id, QuestionParam questionParam);
 
-    Iterable<QuestionDto> queryQuestionsList(String keyWord,Integer courseId);
+    List<QuestionVo> queryQuestionsList(String keyWord, Integer courseId, Integer page, Integer pageSize, String sort
+    );
 
     void insertToElastic();
 }

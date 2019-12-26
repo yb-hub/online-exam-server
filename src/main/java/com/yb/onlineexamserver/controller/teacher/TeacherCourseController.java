@@ -2,6 +2,7 @@ package com.yb.onlineexamserver.controller.teacher;
 
 import com.github.pagehelper.Page;
 import com.yb.onlineexamserver.common.result.CommonResult;
+import com.yb.onlineexamserver.vo.CourseSimpleVo;
 import com.yb.onlineexamserver.vo.CourseVo;
 import com.yb.onlineexamserver.requestparams.CourseParams;
 import com.yb.onlineexamserver.service.teacher.CourseService;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * @Auther: Yang
@@ -46,5 +48,11 @@ public class TeacherCourseController {
                                      @RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize){
         Page<CourseVo> courseVos = courseService.queryCourses(name, majorId, page, pageSize);
         return CommonResult.successList(courseVos);
+    }
+
+    @GetMapping("/courses/simple")
+    public CommonResult queryCoursesSimple(){
+        List<CourseSimpleVo> courseSimpleVos = courseService.queryCoursesSimple();
+        return CommonResult.success(courseSimpleVos);
     }
 }

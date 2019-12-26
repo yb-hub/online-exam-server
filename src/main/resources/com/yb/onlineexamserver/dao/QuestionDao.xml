@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yb.onlineexamserver.dao.QuestionDao">
+    <select id="queryQuestionsList" resultType="com.yb.onlineexamserver.dto.QuestionDto">
+        select * from question
+        where 1=1
+        <if test="keyWord != null and keyWord != ''">
+            and question.title like concat('%',#{keyWord},'%')
+        </if>
+        <if test="courseId != null">
+            and question.course_id = #{courseId}
+        </if>
+        order by #{sort} desc
+    </select>
+</mapper>

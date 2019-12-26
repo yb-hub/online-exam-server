@@ -2,10 +2,13 @@ package com.yb.onlineexamserver.service.teacher.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.alibaba.fastjson.JSON;
+import com.github.pagehelper.PageHelper;
 import com.yb.onlineexamserver.common.enums.courseenums.CourseEnums;
 import com.yb.onlineexamserver.common.enums.questionenums.QuestionEnums;
 import com.yb.onlineexamserver.common.exception.OnlineExamException;
+import com.yb.onlineexamserver.dao.QuestionDao;
 import com.yb.onlineexamserver.dto.QuestionDto;
+import com.yb.onlineexamserver.dto.QuestionOption;
 import com.yb.onlineexamserver.mbg.mapper.CourseMapper;
 import com.yb.onlineexamserver.mbg.mapper.QuestionMapper;
 import com.yb.onlineexamserver.mbg.model.Course;
@@ -15,6 +18,7 @@ import com.yb.onlineexamserver.requestparams.QuestionParam;
 import com.yb.onlineexamserver.respository.QuestionRepository;
 import com.yb.onlineexamserver.service.teacher.QuestionService;
 import com.yb.onlineexamserver.utils.KeyUtils;
+import com.yb.onlineexamserver.vo.QuestionVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +37,9 @@ public class QuestionServiceImpl implements QuestionService {
     private QuestionMapper questionMapper;
     @Autowired
     private CourseMapper courseMapper;
+    @Autowired
+    private QuestionDao questionDao;
+
     @Autowired
     private QuestionRepository questionRepository;
 
@@ -76,12 +83,31 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public Iterable<QuestionDto> queryQuestionsList(String keyWord,Integer courseId) {
-        //List<QuestionDto> byTitleLike = questionRepository.findByTitleLike(keyWord);
-        List<QuestionDto> byTitleLikeAndCourseId = questionRepository.findByTitleLikeAndCourseId(keyWord, courseId);
-//        return questionRepository.findAll();
-        return byTitleLikeAndCourseId;
+    public List<QuestionVo> queryQuestionsList(String keyWord, Integer courseId, Integer page, Integer pageSize, String sort) {
+        PageHelper.startPage(page, pageSize);
+        List<QuestionDto> questionDtos = questionDao.queryQuestionsList(keyWord, courseId, page, pageSize, sort);
+        ArrayList<QuestionVo> questionVos = new ArrayList<>();
+        for (QuestionDto questionDto : questionDtos) {
+            String options = questionDto.getOptions();
+            List<QuestionOption> questionOptions = JSON.parseArray(options, QuestionOption.class);
+            List<String> rightOptions = JSON.parseArray(questionDto.getRightOption(), String.class);
+            QuestionVo questionVo = new QuestionVo();
+            BeanUtil.copyProperties(questionDto, questionVo);
+            questionVo.setOptions(questionOptions);
+            questionVo.setRightOption(rightOptions);
+            questionVos.add(questionVo);
+        }
+        return questionVos;
     }
+
+    //    @Override
+//    public Iterable<QuestionDto> queryQuestionsList(String keyWord,Integer courseId) {
+//        //List<QuestionDto> byTitleLike = questionRepository.findByTitleLike(keyWord);
+//        List<QuestionDto> byTitleLikeAndCourseId = questionRepository.findByTitleLikeAndCourseId(keyWord, courseId);
+////        return questionRepository.findAll();
+//        return byTitleLikeAndCourseId;
+//    }
+
 
     @Override
     public void insertToElastic() {
