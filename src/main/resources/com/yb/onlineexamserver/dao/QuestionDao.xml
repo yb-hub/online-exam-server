@@ -12,4 +12,22 @@
         </if>
         order by #{sort} desc
     </select>
+    <insert id="insertQuestionsList" parameterType="com.yb.onlineexamserver.mbg.model.Question">
+        insert into question(id,course_id,title,`type`,options,right_option,judge_answer,score,analysis,is_paper,create_time,update_time)
+        values
+        <foreach collection="questionList" item="question" separator=",">
+            (#{question.id},
+             #{question.courseId},
+             #{question.title},
+             #{question.type},
+             #{question.options},
+             #{question.rightOption},
+             #{question.judgeAnswer},
+             #{question.score},
+             #{question.analysis},
+             #{question.isPaper},
+             #{question.createTime},
+             #{question.updateTime})
+        </foreach>
+    </insert>
 </mapper>

@@ -57,6 +57,11 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
+    public int insertQuestionsList(List<Question> questionList) {
+        return questionDao.insertQuestionsList(questionList);
+    }
+
+    @Override
     public int deleteQuestions(String id) {
         queryQuestionsById(id);
         return questionMapper.deleteByPrimaryKey(id);

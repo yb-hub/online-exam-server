@@ -25,4 +25,7 @@ public interface QuestionService {
     );
 
     void insertToElastic();
+
+    int insertQuestionsList(List<Question> questionList);
+
 }

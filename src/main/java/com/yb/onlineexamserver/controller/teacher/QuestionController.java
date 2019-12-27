@@ -5,8 +5,10 @@ import com.yb.onlineexamserver.common.enums.statusenums.QuestionEnums;
 import com.yb.onlineexamserver.common.exception.OnlineExamException;
 import com.yb.onlineexamserver.common.result.CommonResult;
 import com.yb.onlineexamserver.dto.QuestionDto;
+import com.yb.onlineexamserver.mbg.model.Question;
 import com.yb.onlineexamserver.requestparams.QuestionParam;
 import com.yb.onlineexamserver.service.teacher.QuestionService;
+import com.yb.onlineexamserver.utils.KeyUtils;
 import com.yb.onlineexamserver.vo.QuestionVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
@@ -15,7 +17,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.ValidationException;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @Auther: Yang
@@ -35,6 +39,17 @@ public class QuestionController {
         return CommonResult.success();
     }
 
+    @PostMapping("/questions/list")
+    public CommonResult insertQuestionList(@RequestBody List<Question> questionList){
+        List<Question> questions = questionList.stream().map(question -> {
+            question.setId(KeyUtils.createUniqueKey());
+            question.setCreateTime(LocalDateTime.now());
+            question.setUpdateTime(LocalDateTime.now());
+            return question;
+        }).collect(Collectors.toList());
+        questionService.insertQuestionsList(questions);
+        return CommonResult.success();
+    }
     @DeleteMapping("/questions/{id}")
     public CommonResult deleteQuestions(@PathVariable("id") String id){
         questionService.deleteQuestions(id);
