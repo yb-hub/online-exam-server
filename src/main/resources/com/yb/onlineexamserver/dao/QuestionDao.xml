@@ -12,6 +12,12 @@
         </if>
         order by #{sort} desc
     </select>
+    <select id="queryLimitQuestionByType" resultType="com.yb.onlineexamserver.mbg.model.Question">
+        select *
+        from question
+        where `type` = #{type}
+        order by rand() limit #{totalCount}
+    </select>
     <insert id="insertQuestionsList" parameterType="com.yb.onlineexamserver.mbg.model.Question">
         insert into question(id,course_id,title,`type`,options,right_option,judge_answer,score,analysis,is_paper,create_time,update_time)
         values

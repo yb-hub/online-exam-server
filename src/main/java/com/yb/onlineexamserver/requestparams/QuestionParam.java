@@ -26,10 +26,12 @@ public class QuestionParam {
     private List<String> rightOption;
 
     private Integer judgeAnswer;
-    @NotNull(message = "题目分值不能为空")
+    //@NotNull(message = "题目分值不能为空")
     private Integer score;
 
     private String analysis;
+
+    private Long difficultyDegree;
 
     private Integer isPaper;
 }

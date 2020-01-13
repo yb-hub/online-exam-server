@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yb.onlineexamserver.mbg.mapper.PaperMapper">
+  <resultMap id="BaseResultMap" type="com.yb.onlineexamserver.mbg.model.Paper">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="course_id" jdbcType="INTEGER" property="courseId" />
+    <result column="grade" jdbcType="INTEGER" property="grade" />
+    <result column="limit_time" jdbcType="INTEGER" property="limitTime" />
+    <result column="question_desciption" jdbcType="VARCHAR" property="questionDesciption" />
+    <result column="total_score" jdbcType="INTEGER" property="totalScore" />
+    <result column="difficulty_degree" jdbcType="DECIMAL" property="difficultyDegree" />
+    <result column="total_single_choice" jdbcType="INTEGER" property="totalSingleChoice" />
+    <result column="total_multi_choice" jdbcType="INTEGER" property="totalMultiChoice" />
+    <result column="total_judge_choice" jdbcType="INTEGER" property="totalJudgeChoice" />
+    <result column="total_question" jdbcType="INTEGER" property="totalQuestion" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, title, type, description, course_id, grade, limit_time, question_desciption, 
+    total_score, difficulty_degree, total_single_choice, total_multi_choice, total_judge_choice, 
+    total_question, create_time, update_time
+  </sql>
+  <select id="selectByExample" parameterType="com.yb.onlineexamserver.mbg.model.PaperExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from paper
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from paper
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from paper
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yb.onlineexamserver.mbg.model.PaperExample">
+    delete from paper
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yb.onlineexamserver.mbg.model.Paper">
+    insert into paper (id, title, type, 
+      description, course_id, grade, 
+      limit_time, question_desciption, total_score, 
+      difficulty_degree, total_single_choice, total_multi_choice, 
+      total_judge_choice, total_question, create_time, 
+      update_time)
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, 
+      #{description,jdbcType=VARCHAR}, #{courseId,jdbcType=INTEGER}, #{grade,jdbcType=INTEGER}, 
+      #{limitTime,jdbcType=INTEGER}, #{questionDesciption,jdbcType=VARCHAR}, #{totalScore,jdbcType=INTEGER}, 
+      #{difficultyDegree,jdbcType=DECIMAL}, #{totalSingleChoice,jdbcType=INTEGER}, #{totalMultiChoice,jdbcType=INTEGER}, 
+      #{totalJudgeChoice,jdbcType=INTEGER}, #{totalQuestion,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yb.onlineexamserver.mbg.model.Paper">
+    insert into paper
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="courseId != null">
+        course_id,
+      </if>
+      <if test="grade != null">
+        grade,
+      </if>
+      <if test="limitTime != null">
+        limit_time,
+      </if>
+      <if test="questionDesciption != null">
+        question_desciption,
+      </if>
+      <if test="totalScore != null">
+        total_score,
+      </if>
+      <if test="difficultyDegree != null">
+        difficulty_degree,
+      </if>
+      <if test="totalSingleChoice != null">
+        total_single_choice,
+      </if>
+      <if test="totalMultiChoice != null">
+        total_multi_choice,
+      </if>
+      <if test="totalJudgeChoice != null">
+        total_judge_choice,
+      </if>
+      <if test="totalQuestion != null">
+        total_question,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="courseId != null">
+        #{courseId,jdbcType=INTEGER},
+      </if>
+      <if test="grade != null">
+        #{grade,jdbcType=INTEGER},
+      </if>
+      <if test="limitTime != null">
+        #{limitTime,jdbcType=INTEGER},
+      </if>
+      <if test="questionDesciption != null">
+        #{questionDesciption,jdbcType=VARCHAR},
+      </if>
+      <if test="totalScore != null">
+        #{totalScore,jdbcType=INTEGER},
+      </if>
+      <if test="difficultyDegree != null">
+        #{difficultyDegree,jdbcType=DECIMAL},
+      </if>
+      <if test="totalSingleChoice != null">
+        #{totalSingleChoice,jdbcType=INTEGER},
+      </if>
+      <if test="totalMultiChoice != null">
+        #{totalMultiChoice,jdbcType=INTEGER},
+      </if>
+      <if test="totalJudgeChoice != null">
+        #{totalJudgeChoice,jdbcType=INTEGER},
+      </if>
+      <if test="totalQuestion != null">
+        #{totalQuestion,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yb.onlineexamserver.mbg.model.PaperExample" resultType="java.lang.Long">
+    select count(*) from paper
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update paper
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.title != null">
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.description != null">
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.courseId != null">
+        course_id = #{record.courseId,jdbcType=INTEGER},
+      </if>
+      <if test="record.grade != null">
+        grade = #{record.grade,jdbcType=INTEGER},
+      </if>
+      <if test="record.limitTime != null">
+        limit_time = #{record.limitTime,jdbcType=INTEGER},
+      </if>
+      <if test="record.questionDesciption != null">
+        question_desciption = #{record.questionDesciption,jdbcType=VARCHAR},
+      </if>
+      <if test="record.totalScore != null">
+        total_score = #{record.totalScore,jdbcType=INTEGER},
+      </if>
+      <if test="record.difficultyDegree != null">
+        difficulty_degree = #{record.difficultyDegree,jdbcType=DECIMAL},
+      </if>
+      <if test="record.totalSingleChoice != null">
+        total_single_choice = #{record.totalSingleChoice,jdbcType=INTEGER},
+      </if>
+      <if test="record.totalMultiChoice != null">
+        total_multi_choice = #{record.totalMultiChoice,jdbcType=INTEGER},
+      </if>
+      <if test="record.totalJudgeChoice != null">
+        total_judge_choice = #{record.totalJudgeChoice,jdbcType=INTEGER},
+      </if>
+      <if test="record.totalQuestion != null">
+        total_question = #{record.totalQuestion,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update paper
+    set id = #{record.id,jdbcType=INTEGER},
+      title = #{record.title,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=INTEGER},
+      description = #{record.description,jdbcType=VARCHAR},
+      course_id = #{record.courseId,jdbcType=INTEGER},
+      grade = #{record.grade,jdbcType=INTEGER},
+      limit_time = #{record.limitTime,jdbcType=INTEGER},
+      question_desciption = #{record.questionDesciption,jdbcType=VARCHAR},
+      total_score = #{record.totalScore,jdbcType=INTEGER},
+      difficulty_degree = #{record.difficultyDegree,jdbcType=DECIMAL},
+      total_single_choice = #{record.totalSingleChoice,jdbcType=INTEGER},
+      total_multi_choice = #{record.totalMultiChoice,jdbcType=INTEGER},
+      total_judge_choice = #{record.totalJudgeChoice,jdbcType=INTEGER},
+      total_question = #{record.totalQuestion,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yb.onlineexamserver.mbg.model.Paper">
+    update paper
+    <set>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="courseId != null">
+        course_id = #{courseId,jdbcType=INTEGER},
+      </if>
+      <if test="grade != null">
+        grade = #{grade,jdbcType=INTEGER},
+      </if>
+      <if test="limitTime != null">
+        limit_time = #{limitTime,jdbcType=INTEGER},
+      </if>
+      <if test="questionDesciption != null">
+        question_desciption = #{questionDesciption,jdbcType=VARCHAR},
+      </if>
+      <if test="totalScore != null">
+        total_score = #{totalScore,jdbcType=INTEGER},
+      </if>
+      <if test="difficultyDegree != null">
+        difficulty_degree = #{difficultyDegree,jdbcType=DECIMAL},
+      </if>
+      <if test="totalSingleChoice != null">
+        total_single_choice = #{totalSingleChoice,jdbcType=INTEGER},
+      </if>
+      <if test="totalMultiChoice != null">
+        total_multi_choice = #{totalMultiChoice,jdbcType=INTEGER},
+      </if>
+      <if test="totalJudgeChoice != null">
+        total_judge_choice = #{totalJudgeChoice,jdbcType=INTEGER},
+      </if>
+      <if test="totalQuestion != null">
+        total_question = #{totalQuestion,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yb.onlineexamserver.mbg.model.Paper">
+    update paper
+    set title = #{title,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      description = #{description,jdbcType=VARCHAR},
+      course_id = #{courseId,jdbcType=INTEGER},
+      grade = #{grade,jdbcType=INTEGER},
+      limit_time = #{limitTime,jdbcType=INTEGER},
+      question_desciption = #{questionDesciption,jdbcType=VARCHAR},
+      total_score = #{totalScore,jdbcType=INTEGER},
+      difficulty_degree = #{difficultyDegree,jdbcType=DECIMAL},
+      total_single_choice = #{totalSingleChoice,jdbcType=INTEGER},
+      total_multi_choice = #{totalMultiChoice,jdbcType=INTEGER},
+      total_judge_choice = #{totalJudgeChoice,jdbcType=INTEGER},
+      total_question = #{totalQuestion,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -31,6 +31,8 @@ public class QuestionVo {
 
     private String analysis;
 
+    private Long difficultyDegree;
+
     private Integer isPaper;
 
     private LocalDateTime createTime;

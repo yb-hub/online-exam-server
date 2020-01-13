@@ -14,28 +14,34 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Question implements Serializable {
-    private String id;
-
-    private Integer courseId;
+public class Paper implements Serializable {
+    private Integer id;
 
     private String title;
 
     private Integer type;
 
-    private String options;
+    private String description;
 
-    private String rightOption;
+    private Integer courseId;
 
-    private Integer judgeAnswer;
+    private Integer grade;
 
-    private Integer score;
+    private Integer limitTime;
 
-    private String analysis;
+    private String questionDesciption;
 
-    private Integer isPaper;
+    private Integer totalScore;
 
     private Long difficultyDegree;
+
+    private Integer totalSingleChoice;
+
+    private Integer totalMultiChoice;
+
+    private Integer totalJudgeChoice;
+
+    private Integer totalQuestion;
 
     private LocalDateTime createTime;
 

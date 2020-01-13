@@ -14,4 +14,5 @@ public interface QuestionDao {
 
     int insertQuestionsList(@Param("questionList") List<Question> questionList);
 
+    List<Question> queryLimitQuestionByType(@Param("type") int type,@Param("totalCount") Integer totalCount);
 }
