@@ -6,7 +6,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 /**
-* Created by Mybatis Generator on 2020/01/10
+* Created by Mybatis Generator on 2020/01/29
 */
 public interface PaperMapper {
     long countByExample(PaperExample example);

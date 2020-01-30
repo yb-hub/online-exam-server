@@ -12,6 +12,9 @@
     <result column="question_desciption" jdbcType="VARCHAR" property="questionDesciption" />
     <result column="total_score" jdbcType="INTEGER" property="totalScore" />
     <result column="difficulty_degree" jdbcType="DECIMAL" property="difficultyDegree" />
+    <result column="single_score" jdbcType="INTEGER" property="singleScore" />
+    <result column="multi_score" jdbcType="INTEGER" property="multiScore" />
+    <result column="judge_score" jdbcType="INTEGER" property="judgeScore" />
     <result column="total_single_choice" jdbcType="INTEGER" property="totalSingleChoice" />
     <result column="total_multi_choice" jdbcType="INTEGER" property="totalMultiChoice" />
     <result column="total_judge_choice" jdbcType="INTEGER" property="totalJudgeChoice" />
@@ -79,8 +82,8 @@
   </sql>
   <sql id="Base_Column_List">
     id, title, type, description, course_id, grade, limit_time, question_desciption, 
-    total_score, difficulty_degree, total_single_choice, total_multi_choice, total_judge_choice, 
-    total_question, create_time, update_time
+    total_score, difficulty_degree, single_score, multi_score, judge_score, total_single_choice, 
+    total_multi_choice, total_judge_choice, total_question, create_time, update_time
   </sql>
   <select id="selectByExample" parameterType="com.yb.onlineexamserver.mbg.model.PaperExample" resultMap="BaseResultMap">
     select
@@ -116,17 +119,20 @@
     insert into paper (id, title, type, 
       description, course_id, grade, 
       limit_time, question_desciption, total_score, 
-      difficulty_degree, total_single_choice, total_multi_choice, 
+      difficulty_degree, single_score, multi_score, 
+      judge_score, total_single_choice, total_multi_choice, 
       total_judge_choice, total_question, create_time, 
       update_time)
     values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, 
       #{description,jdbcType=VARCHAR}, #{courseId,jdbcType=INTEGER}, #{grade,jdbcType=INTEGER}, 
       #{limitTime,jdbcType=INTEGER}, #{questionDesciption,jdbcType=VARCHAR}, #{totalScore,jdbcType=INTEGER}, 
-      #{difficultyDegree,jdbcType=DECIMAL}, #{totalSingleChoice,jdbcType=INTEGER}, #{totalMultiChoice,jdbcType=INTEGER}, 
+      #{difficultyDegree,jdbcType=DECIMAL}, #{singleScore,jdbcType=INTEGER}, #{multiScore,jdbcType=INTEGER}, 
+      #{judgeScore,jdbcType=INTEGER}, #{totalSingleChoice,jdbcType=INTEGER}, #{totalMultiChoice,jdbcType=INTEGER}, 
       #{totalJudgeChoice,jdbcType=INTEGER}, #{totalQuestion,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
       #{updateTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.yb.onlineexamserver.mbg.model.Paper">
+  <insert id="insertSelective" parameterType="com.yb.onlineexamserver.mbg.model.Paper"
+  useGeneratedKeys="true" keyProperty="id">
     insert into paper
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -158,6 +164,15 @@
       </if>
       <if test="difficultyDegree != null">
         difficulty_degree,
+      </if>
+      <if test="singleScore != null">
+        single_score,
+      </if>
+      <if test="multiScore != null">
+        multi_score,
+      </if>
+      <if test="judgeScore != null">
+        judge_score,
       </if>
       <if test="totalSingleChoice != null">
         total_single_choice,
@@ -208,6 +223,15 @@
       </if>
       <if test="difficultyDegree != null">
         #{difficultyDegree,jdbcType=DECIMAL},
+      </if>
+      <if test="singleScore != null">
+        #{singleScore,jdbcType=INTEGER},
+      </if>
+      <if test="multiScore != null">
+        #{multiScore,jdbcType=INTEGER},
+      </if>
+      <if test="judgeScore != null">
+        #{judgeScore,jdbcType=INTEGER},
       </if>
       <if test="totalSingleChoice != null">
         #{totalSingleChoice,jdbcType=INTEGER},
@@ -268,6 +292,15 @@
       <if test="record.difficultyDegree != null">
         difficulty_degree = #{record.difficultyDegree,jdbcType=DECIMAL},
       </if>
+      <if test="record.singleScore != null">
+        single_score = #{record.singleScore,jdbcType=INTEGER},
+      </if>
+      <if test="record.multiScore != null">
+        multi_score = #{record.multiScore,jdbcType=INTEGER},
+      </if>
+      <if test="record.judgeScore != null">
+        judge_score = #{record.judgeScore,jdbcType=INTEGER},
+      </if>
       <if test="record.totalSingleChoice != null">
         total_single_choice = #{record.totalSingleChoice,jdbcType=INTEGER},
       </if>
@@ -303,6 +336,9 @@
       question_desciption = #{record.questionDesciption,jdbcType=VARCHAR},
       total_score = #{record.totalScore,jdbcType=INTEGER},
       difficulty_degree = #{record.difficultyDegree,jdbcType=DECIMAL},
+      single_score = #{record.singleScore,jdbcType=INTEGER},
+      multi_score = #{record.multiScore,jdbcType=INTEGER},
+      judge_score = #{record.judgeScore,jdbcType=INTEGER},
       total_single_choice = #{record.totalSingleChoice,jdbcType=INTEGER},
       total_multi_choice = #{record.totalMultiChoice,jdbcType=INTEGER},
       total_judge_choice = #{record.totalJudgeChoice,jdbcType=INTEGER},
@@ -343,6 +379,15 @@
       <if test="difficultyDegree != null">
         difficulty_degree = #{difficultyDegree,jdbcType=DECIMAL},
       </if>
+      <if test="singleScore != null">
+        single_score = #{singleScore,jdbcType=INTEGER},
+      </if>
+      <if test="multiScore != null">
+        multi_score = #{multiScore,jdbcType=INTEGER},
+      </if>
+      <if test="judgeScore != null">
+        judge_score = #{judgeScore,jdbcType=INTEGER},
+      </if>
       <if test="totalSingleChoice != null">
         total_single_choice = #{totalSingleChoice,jdbcType=INTEGER},
       </if>
@@ -375,6 +420,9 @@
       question_desciption = #{questionDesciption,jdbcType=VARCHAR},
       total_score = #{totalScore,jdbcType=INTEGER},
       difficulty_degree = #{difficultyDegree,jdbcType=DECIMAL},
+      single_score = #{singleScore,jdbcType=INTEGER},
+      multi_score = #{multiScore,jdbcType=INTEGER},
+      judge_score = #{judgeScore,jdbcType=INTEGER},
       total_single_choice = #{totalSingleChoice,jdbcType=INTEGER},
       total_multi_choice = #{totalMultiChoice,jdbcType=INTEGER},
       total_judge_choice = #{totalJudgeChoice,jdbcType=INTEGER},

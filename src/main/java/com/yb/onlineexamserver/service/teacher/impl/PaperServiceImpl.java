@@ -2,20 +2,22 @@ package com.yb.onlineexamserver.service.teacher.impl;
 
 import com.yb.onlineexamserver.common.enums.statusenums.QuestionEnums;
 import com.yb.onlineexamserver.dao.PaperDao;
+import com.yb.onlineexamserver.dao.PaperQuestionDao;
 import com.yb.onlineexamserver.dao.QuestionDao;
 import com.yb.onlineexamserver.dto.PaperDto;
+import com.yb.onlineexamserver.mbg.mapper.PaperMapper;
 import com.yb.onlineexamserver.mbg.model.Paper;
 import com.yb.onlineexamserver.mbg.model.Question;
 import com.yb.onlineexamserver.requestparams.PaperParams;
 import com.yb.onlineexamserver.service.teacher.PaperService;
-import org.graalvm.compiler.core.common.type.ArithmeticOpTable;
+import com.yb.onlineexamserver.utils.PaperLimitTimeUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
+import java.time.LocalDateTime;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -44,9 +46,16 @@ public class PaperServiceImpl implements PaperService {
 
     @Autowired
     private QuestionDao questionDao;
+    @Autowired
+    private PaperQuestionDao paperQuestionDao;
+    @Autowired
+    private PaperMapper paperMapper;
 
     @Override
+    @Transactional
     public int insertPaper(PaperParams paperParams) {
+        PaperDto fitnessPaper = new PaperDto();
+        //BeanUtil.copyProperties(paperParams,fitnessPaper);
         //创建一个种群
         ArrayList<PaperDto> papers = new ArrayList<>();
         for (int i = 0; i < paperListSize; i++) {
@@ -75,29 +84,29 @@ public class PaperServiceImpl implements PaperService {
             paper.setQuestionList(questions);
             papers.add(paper);
         }
-        papers = (ArrayList<PaperDto>) papers.stream().map(paper->{
+        papers = (ArrayList<PaperDto>) papers.stream().map(paper -> {
             paper.setDifficultyDegree();
             return paper;
         }).collect(Collectors.toList());
         //选出最适合的一套试卷
-        PaperDto fitnessPaper = getFitness(papers,paperParams.getDifficultyDegree());
-        System.out.println("随机生成的最适合的试卷(难度)："+ fitnessPaper.getDifficultyDegree());
+        fitnessPaper = getFitness(papers, paperParams.getDifficultyDegree());
+        System.out.println("随机生成的最适合的试卷(难度)：" + fitnessPaper.getDifficultyDegree());
         //开始进化，每次保留最适合的试卷
         for (int i = 0; i < 5; i++) {
             ArrayList<PaperDto> newPaperList = new ArrayList<>();
             newPaperList.add(fitnessPaper);
-            while(newPaperList.size() < paperListSize){
+            while (newPaperList.size() < paperListSize) {
                 //选取两个父试卷
                 PaperDto parent1 = selectParentPaper(papers);
                 PaperDto parent2 = selectParentPaper(papers);
-                while(parent1 == parent2){
+                while (parent1 == parent2) {
                     parent2 = selectParentPaper(papers);
                 }
                 //开始交叉繁殖
                 Integer totalQuestion = parent1.getTotalQuestion();
                 int randowNumber1 = new Random().nextInt(totalQuestion);
                 int randowNumber2 = new Random().nextInt(totalQuestion);
-                if(randowNumber1 > randowNumber2){
+                if (randowNumber1 > randowNumber2) {
                     int tempNumber = randowNumber1;
                     randowNumber1 = randowNumber2;
                     randowNumber2 = tempNumber;
@@ -131,10 +140,34 @@ public class PaperServiceImpl implements PaperService {
                 newPaper.setDifficultyDegree();
                 newPaperList.add(newPaper);
             }
+//            for (PaperDto paperDto : newPaperList) {
+//                System.out.println("==============");
+//                System.out.println("试卷难度："+paperDto.getDifficultyDegree());
+//                for (Question question : paperDto.getQuestionList()) {
+//                    System.out.println(question.getTitle());
+//                }
+//            }
             fitnessPaper = getFitness(newPaperList, paperParams.getDifficultyDegree());
-            System.out.println("进化次数："+i+"难度："+ fitnessPaper.getDifficultyDegree());
+            for (Question question : fitnessPaper.getQuestionList()) {
+                System.out.println("标题："+question.getTitle());
+                System.out.println("类型："+question.getType());
+            }
+            System.out.println("进化次数：" + i + "难度：" + fitnessPaper.getDifficultyDegree());
         }
-        return 1;
+        //将试卷存入数据库中
+        Paper paper = new Paper();
+       //BeanUtil.copyProperties(paperParams,paper);
+       // BeanUtils.copyProperties(paperParams, fitnessPaper);
+        BeanUtils.copyProperties(paperParams, paper);
+        paper.setLimitTime(PaperLimitTimeUtils.TimeToMinute(paperParams.getLimitTime()));
+        paper.setCreateTime(LocalDateTime.now());
+        paper.setUpdateTime(LocalDateTime.now());
+        paperMapper.insertSelective(paper);
+        //将生成试题和试卷关系表
+        Integer paperId = paper.getId();
+        List<String> questionIdList = fitnessPaper.getQuestionList().stream()
+                .map(question -> question.getId()).collect(Collectors.toList());
+        return paperQuestionDao.insertPaperQuestions(paperId,questionIdList);
     }
 
     private PaperDto selectParentPaper(ArrayList<PaperDto> papers) {
@@ -143,20 +176,20 @@ public class PaperServiceImpl implements PaperService {
         return papers.get(randowNumber);
     }
 
-    private PaperDto getFitness(ArrayList<PaperDto> papers,Long difficultyDegree) {
-        if(papers.size() >= 1){
+    private PaperDto getFitness(ArrayList<PaperDto> papers, Double difficultyDegree) {
+        if (papers.size() >= 1) {
             PaperDto fitnessPaper = papers.get(0);
-            Long degreeDifference = Math.abs(difficultyDegree-fitnessPaper.getDifficultyDegree());
+            Double degreeDifference = Math.abs(difficultyDegree - fitnessPaper.getDifficultyDegree());
             for (PaperDto paper : papers) {
                 //System.out.println(paper.toString());
                 //System.out.println(paper.getDifficultyDegree());
-                if(Math.abs(paper.getDifficultyDegree()-difficultyDegree) < degreeDifference){
+                if (Math.abs(paper.getDifficultyDegree() - difficultyDegree) < degreeDifference) {
                     fitnessPaper = paper;
-                    degreeDifference =Math.abs(paper.getDifficultyDegree()-difficultyDegree);
+                    degreeDifference = Math.abs(paper.getDifficultyDegree() - difficultyDegree);
                 }
             }
             return fitnessPaper;
-        }else{
+        } else {
             return new PaperDto();
         }
     }

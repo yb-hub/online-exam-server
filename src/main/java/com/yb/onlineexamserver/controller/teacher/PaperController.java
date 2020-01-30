@@ -22,6 +22,6 @@ public class PaperController {
     @PostMapping("/paper")
     public CommonResult insertPaper(@Valid @RequestBody PaperParams paperParams){
         PaperService.insertPaper(paperParams);
-        return null;
+        return CommonResult.success();
     }
 }

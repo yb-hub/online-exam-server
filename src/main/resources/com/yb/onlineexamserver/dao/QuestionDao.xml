@@ -19,7 +19,9 @@
         order by rand() limit #{totalCount}
     </select>
     <insert id="insertQuestionsList" parameterType="com.yb.onlineexamserver.mbg.model.Question">
-        insert into question(id,course_id,title,`type`,options,right_option,judge_answer,score,analysis,is_paper,create_time,update_time)
+        insert into question(id,course_id,title,`type`,options,
+        right_option,judge_answer,score,analysis,is_paper,difficulty_degree,
+        create_time,update_time)
         values
         <foreach collection="questionList" item="question" separator=",">
             (#{question.id},
@@ -32,6 +34,7 @@
              #{question.score},
              #{question.analysis},
              #{question.isPaper},
+             #{question.difficultyDegree},
              #{question.createTime},
              #{question.updateTime})
         </foreach>

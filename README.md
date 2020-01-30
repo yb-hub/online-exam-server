@@ -152,5 +152,20 @@ log-bin=/usr/local/mysql-log/mysql-bin.log
 binlog_format=row
 ```
 
-
+## 自动组卷算法
+ https://www.cnblogs.com/artwl/archive/2011/05/19/2051556.html
  
+
+## beanutil
+import org.springframework.beans.BeanUtils; spring自带的beanutils
+使用copyProperties时，只会复制类型和变量名字都匹配的字段
+使用hutool的beanutil时，只要变量名字相同，就会复制，当类型不同时，就可能出现类型转换错误。
+
+
+
+## mybatis返回自增id
+```css
+  <insert id="insertSelective" parameterType="com.yb.onlineexamserver.mbg.model.Paper"
+  useGeneratedKeys="true" keyProperty="id">
+```
+使用 useGeneratedKeys 和 keyProperty两个配置即可。id会直接映射到实体类上，使用getId即可。

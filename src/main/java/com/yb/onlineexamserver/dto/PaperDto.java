@@ -26,7 +26,13 @@ public class PaperDto {
 
     private Integer totalScore;
 
-    private Long difficultyDegree;
+    private Double difficultyDegree;
+
+    private Integer singleScore;
+
+    private Integer multiScore;
+
+    private Integer judgeScore;
 
     private Integer totalSingleChoice;
 
@@ -45,7 +51,7 @@ public class PaperDto {
     private List<Question> questionList;
 
     public void setDifficultyDegree() {
-        Long difficutyDegree = 0L;
+        Double difficutyDegree = new Double(0.00);
         int questionCount = this.questionList.size();
 //        int questionCount = this.singleChoiceList.size()+this.multiChoiceList.size()+judgeChoiceList.size();
 //        for (Question question : this.singleChoiceList) {

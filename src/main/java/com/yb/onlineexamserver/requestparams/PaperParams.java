@@ -20,11 +20,19 @@ public class PaperParams {
 
     private Integer grade;
 
-    private Integer limitTime;
+    private String limitTime;
+
+    private String questionDesciption;
 
     private Integer totalScore;
 
-    private Long difficultyDegree;
+    private Double difficultyDegree;
+
+    private Integer singleScore;
+
+    private Integer multiScore;
+
+    private Integer judgeScore;
 
     private Integer totalSingleChoice;
 
@@ -33,4 +41,5 @@ public class PaperParams {
     private Integer totalJudgeChoice;
 
     private Integer totalQuestion;
+
 }

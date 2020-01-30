@@ -735,6 +735,186 @@ public class PaperExample {
             return (Criteria) this;
         }
 
+        public Criteria andSingleScoreIsNull() {
+            addCriterion("single_score is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSingleScoreIsNotNull() {
+            addCriterion("single_score is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSingleScoreEqualTo(Integer value) {
+            addCriterion("single_score =", value, "singleScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andSingleScoreNotEqualTo(Integer value) {
+            addCriterion("single_score <>", value, "singleScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andSingleScoreGreaterThan(Integer value) {
+            addCriterion("single_score >", value, "singleScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andSingleScoreGreaterThanOrEqualTo(Integer value) {
+            addCriterion("single_score >=", value, "singleScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andSingleScoreLessThan(Integer value) {
+            addCriterion("single_score <", value, "singleScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andSingleScoreLessThanOrEqualTo(Integer value) {
+            addCriterion("single_score <=", value, "singleScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andSingleScoreIn(List<Integer> values) {
+            addCriterion("single_score in", values, "singleScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andSingleScoreNotIn(List<Integer> values) {
+            addCriterion("single_score not in", values, "singleScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andSingleScoreBetween(Integer value1, Integer value2) {
+            addCriterion("single_score between", value1, value2, "singleScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andSingleScoreNotBetween(Integer value1, Integer value2) {
+            addCriterion("single_score not between", value1, value2, "singleScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andMultiScoreIsNull() {
+            addCriterion("multi_score is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMultiScoreIsNotNull() {
+            addCriterion("multi_score is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMultiScoreEqualTo(Integer value) {
+            addCriterion("multi_score =", value, "multiScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andMultiScoreNotEqualTo(Integer value) {
+            addCriterion("multi_score <>", value, "multiScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andMultiScoreGreaterThan(Integer value) {
+            addCriterion("multi_score >", value, "multiScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andMultiScoreGreaterThanOrEqualTo(Integer value) {
+            addCriterion("multi_score >=", value, "multiScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andMultiScoreLessThan(Integer value) {
+            addCriterion("multi_score <", value, "multiScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andMultiScoreLessThanOrEqualTo(Integer value) {
+            addCriterion("multi_score <=", value, "multiScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andMultiScoreIn(List<Integer> values) {
+            addCriterion("multi_score in", values, "multiScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andMultiScoreNotIn(List<Integer> values) {
+            addCriterion("multi_score not in", values, "multiScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andMultiScoreBetween(Integer value1, Integer value2) {
+            addCriterion("multi_score between", value1, value2, "multiScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andMultiScoreNotBetween(Integer value1, Integer value2) {
+            addCriterion("multi_score not between", value1, value2, "multiScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andJudgeScoreIsNull() {
+            addCriterion("judge_score is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andJudgeScoreIsNotNull() {
+            addCriterion("judge_score is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andJudgeScoreEqualTo(Integer value) {
+            addCriterion("judge_score =", value, "judgeScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andJudgeScoreNotEqualTo(Integer value) {
+            addCriterion("judge_score <>", value, "judgeScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andJudgeScoreGreaterThan(Integer value) {
+            addCriterion("judge_score >", value, "judgeScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andJudgeScoreGreaterThanOrEqualTo(Integer value) {
+            addCriterion("judge_score >=", value, "judgeScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andJudgeScoreLessThan(Integer value) {
+            addCriterion("judge_score <", value, "judgeScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andJudgeScoreLessThanOrEqualTo(Integer value) {
+            addCriterion("judge_score <=", value, "judgeScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andJudgeScoreIn(List<Integer> values) {
+            addCriterion("judge_score in", values, "judgeScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andJudgeScoreNotIn(List<Integer> values) {
+            addCriterion("judge_score not in", values, "judgeScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andJudgeScoreBetween(Integer value1, Integer value2) {
+            addCriterion("judge_score between", value1, value2, "judgeScore");
+            return (Criteria) this;
+        }
+
+        public Criteria andJudgeScoreNotBetween(Integer value1, Integer value2) {
+            addCriterion("judge_score not between", value1, value2, "judgeScore");
+            return (Criteria) this;
+        }
+
         public Criteria andTotalSingleChoiceIsNull() {
             addCriterion("total_single_choice is null");
             return (Criteria) this;

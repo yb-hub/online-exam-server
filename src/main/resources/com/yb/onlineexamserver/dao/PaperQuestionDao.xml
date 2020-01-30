@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yb.onlineexamserver.dao.PaperQuestionDao">
+    <insert id="insertPaperQuestions">
+        insert into paper_question(paper_id,question_id)
+        values
+        <foreach collection="questionIdList" item="id" separator=",">
+            (
+            #{paperId},
+            #{id}
+            )
+        </foreach>
+    </insert>
+</mapper>
