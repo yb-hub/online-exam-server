@@ -1,20 +1,24 @@
 package com.yb.onlineexamserver.service.teacher.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.yb.onlineexamserver.common.enums.statusenums.QuestionEnums;
-import com.yb.onlineexamserver.dao.PaperDao;
 import com.yb.onlineexamserver.dao.PaperQuestionDao;
 import com.yb.onlineexamserver.dao.QuestionDao;
 import com.yb.onlineexamserver.dto.PaperDto;
 import com.yb.onlineexamserver.mbg.mapper.PaperMapper;
 import com.yb.onlineexamserver.mbg.model.Paper;
+import com.yb.onlineexamserver.mbg.model.PaperExample;
 import com.yb.onlineexamserver.mbg.model.Question;
 import com.yb.onlineexamserver.requestparams.PaperParams;
 import com.yb.onlineexamserver.service.teacher.PaperService;
 import com.yb.onlineexamserver.utils.PaperLimitTimeUtils;
+import com.yb.onlineexamserver.vo.PaperVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -149,15 +153,15 @@ public class PaperServiceImpl implements PaperService {
 //            }
             fitnessPaper = getFitness(newPaperList, paperParams.getDifficultyDegree());
             for (Question question : fitnessPaper.getQuestionList()) {
-                System.out.println("标题："+question.getTitle());
-                System.out.println("类型："+question.getType());
+                System.out.println("标题：" + question.getTitle());
+                System.out.println("类型：" + question.getType());
             }
             System.out.println("进化次数：" + i + "难度：" + fitnessPaper.getDifficultyDegree());
         }
         //将试卷存入数据库中
         Paper paper = new Paper();
-       //BeanUtil.copyProperties(paperParams,paper);
-       // BeanUtils.copyProperties(paperParams, fitnessPaper);
+        //BeanUtil.copyProperties(paperParams,paper);
+        // BeanUtils.copyProperties(paperParams, fitnessPaper);
         BeanUtils.copyProperties(paperParams, paper);
         paper.setLimitTime(PaperLimitTimeUtils.TimeToMinute(paperParams.getLimitTime()));
         paper.setCreateTime(LocalDateTime.now());
@@ -167,7 +171,7 @@ public class PaperServiceImpl implements PaperService {
         Integer paperId = paper.getId();
         List<String> questionIdList = fitnessPaper.getQuestionList().stream()
                 .map(question -> question.getId()).collect(Collectors.toList());
-        return paperQuestionDao.insertPaperQuestions(paperId,questionIdList);
+        return paperQuestionDao.insertPaperQuestions(paperId, questionIdList);
     }
 
     private PaperDto selectParentPaper(ArrayList<PaperDto> papers) {
@@ -192,5 +196,38 @@ public class PaperServiceImpl implements PaperService {
         } else {
             return new PaperDto();
         }
+    }
+
+    @Override
+    public List<PaperVo> queryPaperList(String keyWord, Integer courseId, Integer page, Integer pageSize, String sort) {
+        PaperExample example = new PaperExample();
+        PaperExample.Criteria criteria = example.createCriteria();
+        if (!StringUtils.isEmpty(keyWord)) {
+            criteria.andTitleLike("%" + keyWord + "%");
+        }
+        if (courseId != null) {
+            criteria.andCourseIdEqualTo(courseId);
+        }
+        if (!StringUtils.isEmpty(sort)) {
+            example.setOrderByClause(sort);
+        }
+        PageHelper.startPage(page, pageSize);
+        Page<Paper> paperList = (Page<Paper>) paperMapper.selectByExample(example);
+        Page<PaperVo> paperVoList = new Page<PaperVo>();
+        BeanUtils.copyProperties(paperList, paperVoList);
+        for (Paper paper : paperList) {
+            PaperVo paperVo = new PaperVo();
+            BeanUtils.copyProperties(paper, paperVo);
+            paperVoList.add(paperVo);
+        }
+        return paperVoList;
+    }
+
+    @Override
+    @Transactional
+    public int deletePaper(Integer id) {
+        paperMapper.deleteByPrimaryKey(id);
+        //同时删除试卷题目表中的数据
+        return paperQuestionDao.deleteByPaperId(id);
     }
 }

@@ -9,4 +9,6 @@ import java.util.List;
  */
 public interface PaperQuestionDao {
     int insertPaperQuestions(Integer paperId, List<String> questionIdList);
+
+    int deleteByPaperId(Integer id);
 }
