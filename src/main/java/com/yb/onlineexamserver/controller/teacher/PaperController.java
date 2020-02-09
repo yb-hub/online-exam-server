@@ -3,6 +3,7 @@ package com.yb.onlineexamserver.controller.teacher;
 import com.yb.onlineexamserver.common.result.CommonResult;
 import com.yb.onlineexamserver.requestparams.PaperParams;
 import com.yb.onlineexamserver.service.teacher.PaperService;
+import com.yb.onlineexamserver.vo.PaperDetailVo;
 import com.yb.onlineexamserver.vo.PaperVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -33,6 +34,12 @@ public class PaperController {
                                        @RequestParam(value = "sort",defaultValue = "update_time") String sort){
         List<PaperVo> paperVos = PaperService.queryPaperList(keyWord, courseId, page, pageSize, sort);
         return CommonResult.successList(paperVos);
+    }
+
+    @GetMapping("/paper/{id}")
+    public CommonResult queryPaperById(@PathVariable("id") Integer id){
+        PaperDetailVo paperDetailVo = PaperService.queryPaperById(id);
+        return CommonResult.success(paperDetailVo);
     }
 
     @DeleteMapping("/paper/{id}")

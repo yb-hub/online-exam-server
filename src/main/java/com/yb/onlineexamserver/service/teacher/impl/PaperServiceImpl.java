@@ -1,11 +1,16 @@
 package com.yb.onlineexamserver.service.teacher.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.yb.onlineexamserver.common.enums.statusenums.QuestionEnums;
+import com.yb.onlineexamserver.dao.PaperDao;
 import com.yb.onlineexamserver.dao.PaperQuestionDao;
 import com.yb.onlineexamserver.dao.QuestionDao;
+import com.yb.onlineexamserver.dto.PaperDetailDto;
 import com.yb.onlineexamserver.dto.PaperDto;
+import com.yb.onlineexamserver.dto.QuestionOption;
 import com.yb.onlineexamserver.mbg.mapper.PaperMapper;
 import com.yb.onlineexamserver.mbg.model.Paper;
 import com.yb.onlineexamserver.mbg.model.PaperExample;
@@ -13,7 +18,9 @@ import com.yb.onlineexamserver.mbg.model.Question;
 import com.yb.onlineexamserver.requestparams.PaperParams;
 import com.yb.onlineexamserver.service.teacher.PaperService;
 import com.yb.onlineexamserver.utils.PaperLimitTimeUtils;
+import com.yb.onlineexamserver.vo.PaperDetailVo;
 import com.yb.onlineexamserver.vo.PaperVo;
+import com.yb.onlineexamserver.vo.QuestionVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,6 +57,8 @@ public class PaperServiceImpl implements PaperService {
 
     @Autowired
     private QuestionDao questionDao;
+    @Autowired
+    private PaperDao paperDao;
     @Autowired
     private PaperQuestionDao paperQuestionDao;
     @Autowired
@@ -221,6 +230,35 @@ public class PaperServiceImpl implements PaperService {
             paperVoList.add(paperVo);
         }
         return paperVoList;
+    }
+
+    @Override
+    public PaperDetailVo queryPaperById(Integer id) {
+        PaperDetailDto paperDetailDto = paperDao.queryPaperById(id);
+        PaperDetailVo paperDetailVo = new PaperDetailVo();
+        BeanUtils.copyProperties(paperDetailDto,paperDetailVo);
+        List<Question> totalQuestionList = paperDetailDto.getTotalQuestionList();
+        paperDetailVo.setSingleChoiceList(new ArrayList<>());
+        paperDetailVo.setMultiChoiceList(new ArrayList<>());
+        paperDetailVo.setJudgeChoiceList(new ArrayList<>());
+        for (Question question : totalQuestionList) {
+            List<QuestionOption> questionOptions = JSON.parseArray(question.getOptions(), QuestionOption.class);
+            List<String> rightOptions = JSON.parseArray(question.getRightOption(),String.class);
+            QuestionVo questionVo = new QuestionVo();
+            BeanUtils.copyProperties(question, questionVo);
+            questionVo.setOptions(questionOptions);
+            questionVo.setRightOption(rightOptions);
+            if(question.getType() == QuestionEnums.SIMPLE_QUESTION.getCode()){
+                paperDetailVo.getSingleChoiceList().add(questionVo);
+            }
+            else if(question.getType() == QuestionEnums.MULTI_QUESTION.getCode()){
+                paperDetailVo.getMultiChoiceList().add(questionVo);
+            }
+            else if(question.getType() == QuestionEnums.JUDGE_QUESTION.getCode()){
+                paperDetailVo.getJudgeChoiceList().add(questionVo);
+            }
+        }
+        return paperDetailVo;
     }
 
     @Override

@@ -1,6 +1,8 @@
 package com.yb.onlineexamserver.dao;
 
+import com.yb.onlineexamserver.dto.PaperDetailDto;
 import com.yb.onlineexamserver.mbg.model.Question;
+import com.yb.onlineexamserver.vo.PaperDetailVo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -12,4 +14,5 @@ import java.util.List;
  */
 public interface PaperDao {
 
+    PaperDetailDto queryPaperById(Integer id);
 }

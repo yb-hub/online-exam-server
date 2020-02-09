@@ -1,6 +1,7 @@
 package com.yb.onlineexamserver.service.teacher;
 
 import com.yb.onlineexamserver.requestparams.PaperParams;
+import com.yb.onlineexamserver.vo.PaperDetailVo;
 import com.yb.onlineexamserver.vo.PaperVo;
 
 import java.util.List;
@@ -16,4 +17,6 @@ public interface PaperService {
     List<PaperVo> queryPaperList(String keyWord, Integer courseId, Integer page, Integer pageSize, String sort);
 
     int deletePaper(Integer id);
+
+    PaperDetailVo queryPaperById(Integer id);
 }
