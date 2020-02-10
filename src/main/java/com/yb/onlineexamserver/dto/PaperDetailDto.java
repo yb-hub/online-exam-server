@@ -32,6 +32,8 @@ public class PaperDetailDto {
 
     private Double difficultyDegree;
 
+    private Integer status;
+
     private Integer singleScore;
 
     private Integer multiScore;

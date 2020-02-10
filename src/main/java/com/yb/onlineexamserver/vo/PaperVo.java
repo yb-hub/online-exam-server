@@ -31,4 +31,6 @@ public class PaperVo{
 
     private Long difficultyDegree;
 
+    private LocalDateTime updateTime;
+
 }

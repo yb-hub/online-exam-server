@@ -8,7 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
-* Created by Mybatis Generator on 2020/01/29
+* Created by Mybatis Generator on 2020/02/10
 */
 @Data
 @Builder
@@ -33,7 +33,9 @@ public class Paper implements Serializable {
 
     private Integer totalScore;
 
-    private Long difficultyDegree;
+    private Double difficultyDegree;
+
+    private Integer status;
 
     private Integer singleScore;
 

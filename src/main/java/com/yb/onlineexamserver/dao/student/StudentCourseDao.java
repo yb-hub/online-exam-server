@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface StudentCourseDao {
     List<CourseVo> queryCourses(String name);
+
+    CourseVo queryCourseById(Integer id);
 }

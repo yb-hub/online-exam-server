@@ -9,4 +9,10 @@
             and course.name like concat('%',#{name},'%')
         </if>
     </select>
+
+    <select id="queryCourseById" resultType="com.yb.onlineexamserver.vo.CourseVo">
+        select *
+        from course
+        where id = #{id}
+    </select>
 </mapper>

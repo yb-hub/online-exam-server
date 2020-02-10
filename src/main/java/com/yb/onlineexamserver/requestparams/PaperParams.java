@@ -28,6 +28,8 @@ public class PaperParams {
 
     private Double difficultyDegree;
 
+    private Integer status;
+
     private Integer singleScore;
 
     private Integer multiScore;
