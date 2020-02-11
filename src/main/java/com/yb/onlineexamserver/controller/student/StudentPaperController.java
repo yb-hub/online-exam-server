@@ -2,6 +2,7 @@ package com.yb.onlineexamserver.controller.student;
 
 import com.yb.onlineexamserver.common.result.CommonResult;
 import com.yb.onlineexamserver.service.student.StudentPaperService;
+import com.yb.onlineexamserver.vo.StudentPaperDetailVo;
 import com.yb.onlineexamserver.vo.StudentPaperListVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,8 +20,14 @@ public class StudentPaperController {
     private StudentPaperService studentPaperService;
 
     @GetMapping("student/paper/course/{id}")
-    public CommonResult queryPaperByCourseId(@PathVariable("id") Integer id){
+    public CommonResult queryPaperByCourseId(@PathVariable("id") Integer id) {
         StudentPaperListVo studentPaperListVo = studentPaperService.queryPaperByCourseId(id);
         return CommonResult.success(studentPaperListVo);
+    }
+
+    @GetMapping("/student/paper/detail/{id}")
+    public CommonResult queryPaperDetailByPaperId(@PathVariable("id") Integer id){
+        StudentPaperDetailVo studentPaperDetailVo = studentPaperService.queryPaperDetailByPaperId(id);
+        return CommonResult.success(studentPaperDetailVo);
     }
 }

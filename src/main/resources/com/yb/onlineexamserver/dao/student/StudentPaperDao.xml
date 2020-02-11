@@ -1,9 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yb.onlineexamserver.dao.student.StudentPaperDao">
-  <select id="queryPaperByCourseId" resultType="com.yb.onlineexamserver.vo.PaperVo">
+    <resultMap id="paperDetail" type="com.yb.onlineexamserver.dto.PaperDetailDto">
+        <id property="id" column="id"></id>
+        <result property="title" column="title"></result>
+        <result property="type" column="type"></result>
+        <result property="description" column="description"></result>
+        <result property="limitTime" column="limit_time"></result>
+        <result property="totalScore" column="total_score"></result>
+        <result property="difficultyDegree" column="difficulty_degree"></result>
+        <result property="singleScore" column="single_score"></result>
+        <result property="multiScore" column="multi_score"></result>
+        <result property="judgeScore" column="judge_score"></result>
+        <result property="totalSingleChoice" column="total_single_choice"></result>
+        <result property="totalMultiChoice" column="total_multi_choice"></result>
+        <result property="totalJudgeChoice" column="total_judge_choice"></result>
+        <result property="totalQuestion" column="total_question"></result>
+        <result property="updateTime" column="update_time"></result>
+        <collection property="totalQuestionList" ofType="com.yb.onlineexamserver.mbg.model.Question">
+            <result property="id" column="questionId"></result>
+            <result property="type" column="questionType"></result>
+            <result property="title" column="questionTitle"></result>
+            <result property="options" column="questionOptions"></result>
+            <result property="rightOption" column="questionRightOptions"></result>
+            <result property="judgeAnswer" column="questionJudgeAnswer"></result>
+        </collection>
+    </resultMap>
+    <select id="queryPaperByCourseId" resultType="com.yb.onlineexamserver.vo.PaperVo">
       select *
       from paper
       where course_id = #{id}
   </select>
+    <select id="queryPaperById" resultMap="paperDetail">
+        select paper.*,
+        question.id questionId,
+        question.title questionTitle,
+        question.type questionType,
+        question.options questionOptions,
+        question.right_option questionRightOptions,
+        question.judge_answer questionJudgeAnswer
+        from paper
+        left join paper_question pq
+        on paper.id = pq.paper_id
+        left join question
+        on pq.question_id = question.id
+        where paper.id = #{id}
+    </select>
 </mapper>

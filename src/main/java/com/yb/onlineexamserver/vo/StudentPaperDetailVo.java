@@ -1,6 +1,5 @@
-package com.yb.onlineexamserver.dto;
+package com.yb.onlineexamserver.vo;
 
-import com.yb.onlineexamserver.mbg.model.Question;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -8,11 +7,11 @@ import java.util.List;
 
 /**
  * @Auther: Yang
- * @Date: 2020/02/01 21:13
- * @Description:
+ * @Date: 2020/02/11 19:28
+ * @Description: student端试卷详情返回参数
  */
 @Data
-public class PaperDetailDto {
+public class StudentPaperDetailVo {
     private Integer id;
 
     private String title;
@@ -33,8 +32,6 @@ public class PaperDetailDto {
 
     private Double difficultyDegree;
 
-    private Integer status;
-
     private Integer singleScore;
 
     private Integer multiScore;
@@ -51,5 +48,9 @@ public class PaperDetailDto {
 
     private LocalDateTime updateTime;
 
-    private List<Question> totalQuestionList;
+    private List<QuestionVo> singleChoiceList;
+
+    private List<QuestionVo> multiChoiceList;
+
+    private List<QuestionVo> judgeChoiceList;
 }

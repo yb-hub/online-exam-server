@@ -4,6 +4,7 @@
     <resultMap id="paperDetail" type="com.yb.onlineexamserver.dto.PaperDetailDto">
         <id property="id" column="id"></id>
         <result property="title" column="title"></result>
+        <result property="type" column="type"></result>
         <result property="description" column="description"></result>
         <result property="limitTime" column="limit_time"></result>
         <result property="totalScore" column="total_score"></result>
