@@ -46,4 +46,26 @@
         on pq.question_id = question.id
         where paper.id = #{id}
     </select>
+    <insert id="insertExamResult" parameterType="com.yb.onlineexamserver.dto.ExamResultDto">
+        insert into exam_result(paper_id,
+        student_id,
+        total_score,
+        single_answer,
+        multi_answer,
+        judge_answer,
+        right_single,
+        right_multi,
+        right_judge,
+        create_time)
+        values (#{paperId},
+        #{studentId},
+        #{totalScore},
+        #{singleAnswer},
+        #{multiAnswer},
+        #{judgeAnswer},
+        #{rightSingle},
+        #{rightMulti},
+        #{rightJudge},
+        #{createTime})
+    </insert>
 </mapper>

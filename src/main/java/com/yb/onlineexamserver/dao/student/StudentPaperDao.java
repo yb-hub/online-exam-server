@@ -1,5 +1,6 @@
 package com.yb.onlineexamserver.dao.student;
 
+import com.yb.onlineexamserver.dto.ExamResultDto;
 import com.yb.onlineexamserver.dto.PaperDetailDto;
 import com.yb.onlineexamserver.vo.PaperVo;
 
@@ -9,4 +10,6 @@ public interface StudentPaperDao {
     List<PaperVo> queryPaperByCourseId(Integer id);
 
     PaperDetailDto queryPaperById(Integer id);
+
+    int insertExamResult(ExamResultDto examResultDto);
 }
