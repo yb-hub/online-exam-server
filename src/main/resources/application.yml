@@ -24,6 +24,10 @@ spring:
     elasticsearch:
       cluster-name: docker-cluster
       cluster-nodes: 47.99.193.37:9300
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
 
 logging:
   level:
@@ -35,3 +39,7 @@ mybatis:
     - classpath:com/yb/onlineexamserver/mbg/mapper/*.xml
   configuration:
     map-underscore-to-camel-case: true
+
+prop:
+  upload-folder: www.lovecoding.online:/usr/local/myimages
+  upload-server: www.lovecoding.online:8999/images/

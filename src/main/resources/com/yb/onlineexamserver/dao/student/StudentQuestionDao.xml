@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yb.onlineexamserver.dao.student.StudentQuestionDao">
+   <delete id="deleteStudentQuestionCollect">
+       delete from stu_question
+       where student_id = #{studentId}
+       and question_id = #{questionId}
+   </delete>
+    <insert id="insertStudentQuestionCollect">
+        insert into stu_question(student_id,question_id,create_time,update_time)
+        values (#{studentId},#{questionId},#{createTime},#{updateTime})
+    </insert>
+    <select id="queryStudentQuestionCollectByStudentId" resultType="java.lang.String">
+        select question_id
+        from stu_question
+        where student_id = #{studentId}
+    </select>
+</mapper>

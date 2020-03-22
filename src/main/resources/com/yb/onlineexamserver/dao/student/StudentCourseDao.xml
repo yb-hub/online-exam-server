@@ -15,4 +15,15 @@
         from course
         where id = #{id}
     </select>
+
+    <select id="queryCoursesWrongByStudentId" resultType="com.yb.onlineexamserver.vo.CourseSimpleVo">
+        select paper.course_id id,course.name name
+        from paper,course
+        where course.id = paper.course_id and
+        paper.id in (
+        select exam.paper_id
+        from exam_result exam
+        where exam.student_id = #{studentId}
+        GROUP BY exam.paper_id)
+    </select>
 </mapper>

@@ -7,6 +7,7 @@ import com.yb.onlineexamserver.dao.student.StudentPaperDao;
 import com.yb.onlineexamserver.dto.ExamResultDto;
 import com.yb.onlineexamserver.dto.PaperDetailDto;
 import com.yb.onlineexamserver.dto.QuestionOption;
+import com.yb.onlineexamserver.dto.StudentWrongDetailDto;
 import com.yb.onlineexamserver.mbg.model.Question;
 import com.yb.onlineexamserver.requestparams.student.SubmittedPaperParams;
 import com.yb.onlineexamserver.service.student.StudentPaperService;
@@ -135,5 +136,32 @@ public class StudentPaperServiceImpl implements StudentPaperService {
 //        Integer examResultId = examResultDto.getId();
 
 //        return 1;
+    }
+
+    @Override
+    public List<StudentPaperWrongVo> queryPaperWrongByStudentId(String studentId,Integer courseId) {
+        return studentPaperDao.queryPaperWrongByStudentId(studentId,courseId);
+    }
+
+    @Override
+    public StudentWrongDetailVo queryPaperWrongDetailByExamId(Integer examId) {
+        StudentWrongDetailVo studentWrongDetailVo = new StudentWrongDetailVo();
+        StudentWrongDetailDto studentWrongDetailDto = studentPaperDao.queryPaperWrongDetailByExamId(examId);
+        StudentPaperDetailVo studentPaperDetailVo = queryPaperDetailByPaperId(studentWrongDetailDto.getPaperId());
+        studentWrongDetailVo.setSingleChoiceList(studentPaperDetailVo.getSingleChoiceList());
+        studentWrongDetailVo.setMultiChoiceList(studentPaperDetailVo.getMultiChoiceList());
+        studentWrongDetailVo.setJudgeChoiceList(studentPaperDetailVo.getJudgeChoiceList());
+        List<List<String>> lists1 = new ArrayList<>();
+        List<List> lists = JSON.parseArray(studentWrongDetailDto.getMultiAnswer(), List.class);
+        for (List list : lists) {
+            lists1.add(JSON.parseArray(JSON.toJSONString(list), String.class));
+        }
+        studentWrongDetailVo.setSingleAnswer(JSON.parseArray(studentWrongDetailDto.getSingleAnswer(), String.class));
+        studentWrongDetailVo.setMultiAnswer(lists1);
+        studentWrongDetailVo.setJudgeAnswer(JSON.parseArray(studentWrongDetailDto.getJudgeAnswer(), Integer.class));
+        studentWrongDetailVo.setExamId(studentWrongDetailDto.getExamId());
+        studentWrongDetailVo.setPaperId(studentWrongDetailDto.getPaperId());
+        studentWrongDetailVo.setPaperTitle(studentWrongDetailDto.getPaperTitle());
+        return studentWrongDetailVo;
     }
 }

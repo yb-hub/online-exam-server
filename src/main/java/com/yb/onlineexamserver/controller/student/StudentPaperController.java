@@ -5,10 +5,13 @@ import com.yb.onlineexamserver.requestparams.student.SubmittedPaperParams;
 import com.yb.onlineexamserver.service.student.StudentPaperService;
 import com.yb.onlineexamserver.vo.StudentPaperDetailVo;
 import com.yb.onlineexamserver.vo.StudentPaperListVo;
+import com.yb.onlineexamserver.vo.StudentPaperWrongVo;
+import com.yb.onlineexamserver.vo.StudentWrongDetailVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * @Auther: Yang
@@ -36,5 +39,16 @@ public class StudentPaperController {
     public CommonResult queryPaperResult(@RequestBody SubmittedPaperParams submittedPaper){
         studentPaperService.insertPaperResult(submittedPaper);
         return CommonResult.success();
+    }
+    @GetMapping("/student/paper/wrong/{id}")
+    public CommonResult queryPaperWrongByStudentId(@PathVariable("id") String studentId,@RequestParam(name = "courseId",required = false) Integer courseId){
+        List<StudentPaperWrongVo> studentPaperWrongVos = studentPaperService.queryPaperWrongByStudentId(studentId,courseId);
+        return CommonResult.success(studentPaperWrongVos);
+    }
+
+    @GetMapping("/student/paper/wrong/detail/{id}")
+    public CommonResult queryPaperWrongDetailByExamId(@PathVariable("id") Integer examId){
+        StudentWrongDetailVo studentWrongDetailVo = studentPaperService.queryPaperWrongDetailByExamId(examId);
+        return CommonResult.success(studentWrongDetailVo);
     }
 }

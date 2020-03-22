@@ -68,4 +68,37 @@
         #{rightJudge},
         #{createTime})
     </insert>
+    <select id="queryPaperWrongByStudentId" resultType="com.yb.onlineexamserver.vo.StudentPaperWrongVo">
+        select exam.id examId,
+        paper.title paperTitle,
+        paper.type paperType,
+        paper.difficulty_degree paperDifficultyDegree,
+        paper.total_question paperTotalQuestion,
+        paper.total_score totalScore,
+        paper.total_single_choice totalSingle,
+        paper.total_multi_choice totalMulti,
+        paper.total_judge_choice totalJudge,
+        exam.right_single rightSingle,
+        exam.right_multi rightMulti,
+        exam.right_judge rightJudge,
+        exam.create_time createTime
+        from exam_result exam,paper
+        where 1=1
+        and exam.student_id = #{studentId}
+        and exam.paper_id = paper.id
+        <if test="courseId != null">
+            and paper.course_id = #{courseId}
+        </if>
+    </select>
+    <select id="queryPaperWrongDetailByExamId" resultType="com.yb.onlineexamserver.dto.StudentWrongDetailDto">
+        select exam.id examId,
+        exam.paper_id paperId,
+        exam.single_answer singleAnswer,
+        exam.multi_answer multiAnswer,
+        exam.judge_answer judgeAnswer,
+        paper.title paperTitle
+        from exam_result exam,paper
+        where exam.id = #{examId}
+        and paper.id = exam.paper_id
+    </select>
 </mapper>

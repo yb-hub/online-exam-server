@@ -62,7 +62,11 @@
             <!--<columnOverride column="create_time" javaType="java.time.LocalDateTime"></columnOverride>-->
             <!--<columnOverride column="update_time" javaType="java.time.LocalDateTime"></columnOverride>-->
         <!--</table>-->
-        <table tableName="paper" domainObjectName="Paper">
+        <!--<table tableName="paper" domainObjectName="Paper">-->
+            <!--<columnOverride column="create_time" javaType="java.time.LocalDateTime"></columnOverride>-->
+            <!--<columnOverride column="update_time" javaType="java.time.LocalDateTime"></columnOverride>-->
+        <!--</table>-->
+        <table tableName="banner" domainObjectName="Banner">
             <columnOverride column="create_time" javaType="java.time.LocalDateTime"></columnOverride>
             <columnOverride column="update_time" javaType="java.time.LocalDateTime"></columnOverride>
         </table>

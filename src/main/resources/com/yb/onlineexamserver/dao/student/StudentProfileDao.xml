@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yb.onlineexamserver.dao.student.StudentProfileDao">
+    <resultMap id="scoreDetail" type="com.yb.onlineexamserver.vo.StudentProfileScoreDetailVo">
+        <id property="id" column="id"></id>
+        <result column="right_single" property="rightSingle"></result>
+        <result column="right_multi" property="rightMulti"></result>
+        <result column="right_judge" property="rightJudge"></result>
+        <result column="examTotalScore" property="totalScore"></result>
+        <result column="create_time" property="createTime"></result>
+        <association property="paper" javaType="com.yb.onlineexamserver.dto.PaperDetailDto">
+            <id property="id" column="id"></id>
+            <result property="title" column="title"></result>
+            <result property="type" column="type"></result>
+            <result property="description" column="description"></result>
+            <result property="limitTime" column="limit_time"></result>
+            <result property="totalScore" column="total_score"></result>
+            <result property="difficultyDegree" column="difficulty_degree"></result>
+            <result property="singleScore" column="single_score"></result>
+            <result property="multiScore" column="multi_score"></result>
+            <result property="judgeScore" column="judge_score"></result>
+            <result property="totalSingleChoice" column="total_single_choice"></result>
+            <result property="totalMultiChoice" column="total_multi_choice"></result>
+            <result property="totalJudgeChoice" column="total_judge_choice"></result>
+            <result property="totalQuestion" column="total_question"></result>
+            <result property="updateTime" column="update_time"></result>
+        </association>
+    </resultMap>
+    <select id="queryStudentScoreById" resultType="com.yb.onlineexamserver.vo.StudentProfileScoreVo">
+        select exam.id,exam.paper_id,exam.total_score,exam.create_time,
+        paper.title paperTitle,
+        paper.type paperType,
+        paper.total_score paperTotalScore,
+        paper.difficulty_degree paperDifficultyDegree
+        from exam_result exam,paper
+        where student_id = #{studentId} and  exam.paper_id = paper.id
+    </select>
+    <select id="queryStudentScoreDetailById" resultMap="scoreDetail">
+        select paper.*,exam.total_score examTotalScore,exam.right_single,exam.right_multi,exam.right_judge,exam.create_time
+        from paper,exam_result exam
+        where exam.paper_id = paper.id
+        and exam.id = #{examId}
+    </select>
+</mapper>
