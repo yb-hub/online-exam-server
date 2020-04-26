@@ -6,7 +6,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 /**
-* Created by Mybatis Generator on 2020/03/22
+* Created by Mybatis Generator on 2020/04/05
 */
 public interface BannerMapper {
     long countByExample(BannerExample example);

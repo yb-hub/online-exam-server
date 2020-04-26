@@ -14,16 +14,26 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Banner implements Serializable {
+public class Student implements Serializable {
     private Integer id;
 
-    private String title;
+    private String name;
 
-    private String url;
+    private String studentId;
 
-    private Integer type;
+    private Integer classId;
 
-    private Integer status;
+    private Integer majorId;
+
+    private Integer phoneNumber;
+
+    private String email;
+
+    private Integer sex;
+
+    private String password;
+
+    private Integer isDelete;
 
     private LocalDateTime createTime;
 
