@@ -5,9 +5,7 @@ import com.yb.onlineexamserver.mbg.model.StudentExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
-/**
-* Created by Mybatis Generator on 2020/04/05
-*/
+
 public interface StudentMapper {
     long countByExample(StudentExample example);
 

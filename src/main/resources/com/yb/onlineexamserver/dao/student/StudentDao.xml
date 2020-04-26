@@ -1,10 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yb.onlineexamserver.dao.student.StudentDao">
-   <select id="queryStudentByStudentIdAndPwd" resultType="com.yb.onlineexamserver.vo.StudentLoginVo">
-       select id,`name` studentName,student_Id sno
-       from student
-       where student_id = #{studentId}
-       and password = #{password}
-   </select>
+    <select id="login" parameterType="com.yb.onlineexamserver.requestparams.student.StudentLoginInfo"
+    resultType="com.yb.onlineexamserver.vo.StudentVo">
+        select stu.*,major.name majorName
+        from student stu
+        left join major
+        on major.id = stu.major_id
+        where stu.student_id = #{studentLoginInfo.studentId}
+        and stu.password = #{studentLoginInfo.password}
+    </select>
+    <select id="queryStudentById" resultType="com.yb.onlineexamserver.vo.StudentVo">
+        select stu.*,major.name majorName
+        from student stu
+        left join major
+        on major.id = stu.major_id
+        where stu.student_id = #{studentId}
+    </select>
+
+    <select id="queryStudentByStudentIdAndPwd" resultType="com.yb.onlineexamserver.mbg.model.Student">
+        select *
+        from student
+        where student_id = #{studentId}
+        and password = #{password}
+    </select>
+
+    <update id="updatePassword">
+        update student
+        set password = #{newPassword}
+        where student_id = #{studentId}
+    </update>
 </mapper>

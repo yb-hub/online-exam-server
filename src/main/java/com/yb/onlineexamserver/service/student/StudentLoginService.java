@@ -1,8 +1,8 @@
 package com.yb.onlineexamserver.service.student;
 
-import com.yb.onlineexamserver.requestparams.student.StudentLoginParams;
-import com.yb.onlineexamserver.vo.StudentLoginVo;
+import com.yb.onlineexamserver.requestparams.student.StudentLoginInfo;
+import com.yb.onlineexamserver.vo.StudentVo;
 
 public interface StudentLoginService {
-    StudentLoginVo login(StudentLoginParams studentLoginParam);
+    StudentVo login(StudentLoginInfo studentLoginInfo);
 }
