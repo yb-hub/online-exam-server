@@ -10,9 +10,17 @@
         insert into stu_question(student_id,question_id,create_time,update_time)
         values (#{studentId},#{questionId},#{createTime},#{updateTime})
     </insert>
-    <select id="queryStudentQuestionCollectByStudentId" resultType="java.lang.String">
-        select question_id
-        from stu_question
-        where student_id = #{studentId}
+    <select id="queryStudentQuestionCollectByStudentId" resultType="com.yb.onlineexamserver.vo.StudentQuestionCollectionVo">
+        select sq.question_id,q.title questionTitle,q.type questionType
+        from stu_question sq,question q
+        where sq.student_id = #{studentId}
+        and sq.question_id = q.id
+    </select>
+    <select id="queryStudentQuestionCollectByQuestionType" resultType="com.yb.onlineexamserver.vo.StudentQuestionCollectionVo">
+        select sq.question_id,q.title questionTitle,q.type questionType
+        from stu_question sq,question q
+        where sq.student_id = #{studentId}
+        and sq.question_id = q.id
+        and q.type = #{questionType}
     </select>
 </mapper>

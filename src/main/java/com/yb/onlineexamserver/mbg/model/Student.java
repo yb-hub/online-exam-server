@@ -2,22 +2,7 @@ package com.yb.onlineexamserver.mbg.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-<<<<<<< HEAD
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-/**
-* Created by Mybatis Generator on 2020/04/05
-*/
-@Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-=======
-
->>>>>>> 85b9bd4064af824ede4558337ce937812ff14f8c
 public class Student implements Serializable {
     private Integer id;
 
@@ -29,11 +14,7 @@ public class Student implements Serializable {
 
     private Integer majorId;
 
-<<<<<<< HEAD
-    private Integer phoneNumber;
-=======
     private String phoneNumber;
->>>>>>> 85b9bd4064af824ede4558337ce937812ff14f8c
 
     private String email;
 
@@ -48,8 +29,6 @@ public class Student implements Serializable {
     private LocalDateTime updateTime;
 
     private static final long serialVersionUID = 1L;
-<<<<<<< HEAD
-=======
 
     public Integer getId() {
         return id;
@@ -146,5 +125,4 @@ public class Student implements Serializable {
     public void setUpdateTime(LocalDateTime updateTime) {
         this.updateTime = updateTime;
     }
->>>>>>> 85b9bd4064af824ede4558337ce937812ff14f8c
 }

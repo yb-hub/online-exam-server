@@ -5,6 +5,10 @@ import com.yb.onlineexamserver.service.student.StudentLoginService;
 import com.yb.onlineexamserver.vo.StudentVo;
 import org.mybatis.spring.boot.autoconfigure.MybatisProperties;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,6 +40,11 @@ public class StudentLoginController {
     @Autowired
     private StudentService studentService;
 
+    /**
+     * 使用spring security代替
+     * @param studentLoginInfo
+     * @return
+     */
     @PostMapping("/student/login")
     public CommonResult login(@RequestBody @Valid StudentLoginInfo studentLoginInfo){
         StudentVo studentVo = studentLoginService.login(studentLoginInfo);
@@ -57,4 +66,5 @@ public class StudentLoginController {
         StudentVo studentVo = studentService.updateStudent(studentId, studentUpdateParams);
         return CommonResult.success(studentVo);
     }
+
 }

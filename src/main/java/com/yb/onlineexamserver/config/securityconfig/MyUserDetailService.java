@@ -18,11 +18,9 @@ public class MyUserDetailService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         //通过用户名获取用户信息
         //封装为一个UserDetails对象，User是UserDeatils的一个实现类
-
         //模拟从数据库查询出来的密码和角色
         String password = "123456";
-        User user = new User(username,password, AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_USER,ROLE_ADMIN"));
+        User user = new User(username,password, AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_STUDENT"));
         return user;
-
     }
 }

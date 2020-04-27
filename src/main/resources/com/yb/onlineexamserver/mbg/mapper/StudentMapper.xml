@@ -7,11 +7,7 @@
     <result column="student_id" jdbcType="VARCHAR" property="studentId" />
     <result column="class_id" jdbcType="INTEGER" property="classId" />
     <result column="major_id" jdbcType="INTEGER" property="majorId" />
-<<<<<<< HEAD
-    <result column="phone_number" jdbcType="INTEGER" property="phoneNumber" />
-=======
     <result column="phone_number" jdbcType="VARCHAR" property="phoneNumber" />
->>>>>>> 85b9bd4064af824ede4558337ce937812ff14f8c
     <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="sex" jdbcType="INTEGER" property="sex" />
     <result column="password" jdbcType="VARCHAR" property="password" />
@@ -117,12 +113,8 @@
       email, sex, password, 
       is_delete, create_time, update_time
       )
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{studentId,jdbcType=VARCHAR}, 
-<<<<<<< HEAD
-      #{classId,jdbcType=INTEGER}, #{majorId,jdbcType=INTEGER}, #{phoneNumber,jdbcType=INTEGER}, 
-=======
-      #{classId,jdbcType=INTEGER}, #{majorId,jdbcType=INTEGER}, #{phoneNumber,jdbcType=VARCHAR}, 
->>>>>>> 85b9bd4064af824ede4558337ce937812ff14f8c
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{studentId,jdbcType=VARCHAR},
+      #{classId,jdbcType=INTEGER}, #{majorId,jdbcType=INTEGER}, #{phoneNumber,jdbcType=VARCHAR},
       #{email,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER}, #{password,jdbcType=VARCHAR}, 
       #{isDelete,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
       )
@@ -184,11 +176,7 @@
         #{majorId,jdbcType=INTEGER},
       </if>
       <if test="phoneNumber != null">
-<<<<<<< HEAD
-        #{phoneNumber,jdbcType=INTEGER},
-=======
         #{phoneNumber,jdbcType=VARCHAR},
->>>>>>> 85b9bd4064af824ede4558337ce937812ff14f8c
       </if>
       <if test="email != null">
         #{email,jdbcType=VARCHAR},
@@ -235,11 +223,7 @@
         major_id = #{record.majorId,jdbcType=INTEGER},
       </if>
       <if test="record.phoneNumber != null">
-<<<<<<< HEAD
-        phone_number = #{record.phoneNumber,jdbcType=INTEGER},
-=======
         phone_number = #{record.phoneNumber,jdbcType=VARCHAR},
->>>>>>> 85b9bd4064af824ede4558337ce937812ff14f8c
       </if>
       <if test="record.email != null">
         email = #{record.email,jdbcType=VARCHAR},
@@ -271,11 +255,7 @@
       student_id = #{record.studentId,jdbcType=VARCHAR},
       class_id = #{record.classId,jdbcType=INTEGER},
       major_id = #{record.majorId,jdbcType=INTEGER},
-<<<<<<< HEAD
-      phone_number = #{record.phoneNumber,jdbcType=INTEGER},
-=======
       phone_number = #{record.phoneNumber,jdbcType=VARCHAR},
->>>>>>> 85b9bd4064af824ede4558337ce937812ff14f8c
       email = #{record.email,jdbcType=VARCHAR},
       sex = #{record.sex,jdbcType=INTEGER},
       password = #{record.password,jdbcType=VARCHAR},
@@ -302,11 +282,7 @@
         major_id = #{majorId,jdbcType=INTEGER},
       </if>
       <if test="phoneNumber != null">
-<<<<<<< HEAD
-        phone_number = #{phoneNumber,jdbcType=INTEGER},
-=======
         phone_number = #{phoneNumber,jdbcType=VARCHAR},
->>>>>>> 85b9bd4064af824ede4558337ce937812ff14f8c
       </if>
       <if test="email != null">
         email = #{email,jdbcType=VARCHAR},
@@ -335,11 +311,7 @@
       student_id = #{studentId,jdbcType=VARCHAR},
       class_id = #{classId,jdbcType=INTEGER},
       major_id = #{majorId,jdbcType=INTEGER},
-<<<<<<< HEAD
-      phone_number = #{phoneNumber,jdbcType=INTEGER},
-=======
       phone_number = #{phoneNumber,jdbcType=VARCHAR},
->>>>>>> 85b9bd4064af824ede4558337ce937812ff14f8c
       email = #{email,jdbcType=VARCHAR},
       sex = #{sex,jdbcType=INTEGER},
       password = #{password,jdbcType=VARCHAR},

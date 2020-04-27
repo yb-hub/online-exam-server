@@ -17,15 +17,15 @@ import java.util.List;
 @Service("studentCourseService")
 public class CourseServiceImpl implements CourseService {
     @Autowired
-    private StudentCourseDao courseDao;
+    private StudentCourseDao studentCourseDao;
     @Override
     public List<CourseVo> queryCourses(String name) {
-        List<CourseVo> courseVos = courseDao.queryCourses(name);
+        List<CourseVo> courseVos = studentCourseDao.queryCourses(name);
         return courseVos;
     }
 
     @Override
     public List<CourseSimpleVo> queryCoursesWrongByStudentId(String studentId) {
-        return courseDao.queryCoursesWrongByStudentId(studentId);
+        return studentCourseDao.queryCoursesWrongByStudentId(studentId);
     }
 }
