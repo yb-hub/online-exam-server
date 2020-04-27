@@ -44,6 +44,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     }
 }
 ```
+在整合spring security后，导致跨域配置失效。需要在security的配置中加上cors.
 
 
 ### 使用elasticsearch搜索题目
@@ -169,3 +170,123 @@ import org.springframework.beans.BeanUtils; spring自带的beanutils
   useGeneratedKeys="true" keyProperty="id">
 ```
 使用 useGeneratedKeys 和 keyProperty两个配置即可。id会直接映射到实体类上，使用getId即可。
+
+## 关于spring security无法获取json格式参数的解决方法
+在进行用户登录操作时，spring security会获取前端传过来的参数，并封装。
+### UsernamePasswordAuthenticationFilter
+```
+public Authentication attemptAuthentication(HttpServletRequest request,
+			HttpServletResponse response) throws AuthenticationException {
+		if (postOnly && !request.getMethod().equals("POST")) {
+			throw new AuthenticationServiceException(
+					"Authentication method not supported: " + request.getMethod());
+		}
+
+		String username = obtainUsername(request);
+		String password = obtainPassword(request);
+
+		if (username == null) {
+			username = "";
+		}
+
+		if (password == null) {
+			password = "";
+		}
+
+		username = username.trim();
+
+		UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(
+				username, password);
+
+		// Allow subclasses to set the "details" property
+		setDetails(request, authRequest);
+
+		return this.getAuthenticationManager().authenticate(authRequest);
+	}
+	protected String obtainUsername(HttpServletRequest request) {
+    		return request.getParameter(usernameParameter);
+    	}
+	
+	
+	protected String obtainPassword(HttpServletRequest request) {
+    		return request.getParameter(passwordParameter);
+    	}
+    
+```
+在UsernamePasswordAuthenticationFilter这个过滤器中会获取username和password,但是都是通过表单的方式获取的。
+并且参数名称是username和password,此参数名称可以在配置文件中修改。
+```
+http.authorizeRequests()
+                .usernameParameter("studentId")
+                .passwordParameter("password")
+```
+同时为了可以接受json格式的参数，我们可以自定义一个过滤器，重写其中的obtainPassword和obtainUsername方法。
+```java
+public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+    //在request使用getReader读取body时，只能读取一次。
+    private StringBuilder sb;
+    @Override
+    protected String obtainUsername(HttpServletRequest request) {
+        sb = getStringBuilder(request);
+        AuthenticationBean authenticationBean = JSONObject.parseObject(sb.toString(), AuthenticationBean.class);
+        return authenticationBean.getStudentId();
+    }
+    @Override
+    protected String obtainPassword(HttpServletRequest request) {
+        AuthenticationBean authenticationBean = JSONObject.parseObject(sb.toString(), AuthenticationBean.class);
+        return authenticationBean.getPassword();
+    }
+
+    public StringBuilder getStringBuilder(HttpServletRequest request){
+        BufferedReader br = null;
+        StringBuilder sb = new StringBuilder("");
+        try
+        {
+            br = request.getReader();
+            String str;
+            while ((str = br.readLine()) != null)
+            {
+                sb.append(str);
+            }
+            br.close();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            if (null != br)
+            {
+                try
+                {
+                    br.close();
+                }
+                catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return sb;
+    }
+}
+```
+同时用这个过滤器，替换之前的UsernamePasswordAuthenticationFilter
+```
+    //用重写的Filter替换掉原有的UsernamePasswordAuthenticationFilter
+    http.addFilterAt(customAuthenticationFilter(),
+            UsernamePasswordAuthenticationFilter.class);
+    //注册自定义的UsernamePasswordAuthenticationFilter
+    @Bean
+    CustomAuthenticationFilter customAuthenticationFilter() throws Exception {
+        CustomAuthenticationFilter filter = new CustomAuthenticationFilter();
+        filter.setAuthenticationSuccessHandler(mySuccessHandler);
+        filter.setAuthenticationFailureHandler(myFailureHandler);
+        filter.setFilterProcessesUrl("/student/login");
+
+        //这句很关键，重用WebSecurityConfigurerAdapter配置的AuthenticationManager，不然要自己组装AuthenticationManager
+        filter.setAuthenticationManager(authenticationManagerBean());
+        return filter;
+    }
+```
