@@ -69,6 +69,6 @@ public class FileUploadUtils {
             e.printStackTrace();
             throw new OnlineExamException(OnlineExamExceptionEnum.FILE_SAVE_FAIL);
         }
-        return UPLOAD_SERVER + realFileName;
+        return "http://"+UPLOAD_SERVER + realFileName;
     }
 }

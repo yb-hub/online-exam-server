@@ -35,6 +35,7 @@ public class StudentQuestionServiceImpl implements StudentQuestionService {
 
     @Override
     public int insertStudentQuestionCollect(String studentId, String questionId) {
+        //todo:判断是否已经收藏
         return studentQuestionDao.insertStudentQuestionCollect(studentId,questionId, LocalDateTime.now(),LocalDateTime.now());
     }
 
