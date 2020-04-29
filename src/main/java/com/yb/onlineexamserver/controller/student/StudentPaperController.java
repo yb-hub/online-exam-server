@@ -3,10 +3,7 @@ package com.yb.onlineexamserver.controller.student;
 import com.yb.onlineexamserver.common.result.CommonResult;
 import com.yb.onlineexamserver.requestparams.student.SubmittedPaperParams;
 import com.yb.onlineexamserver.service.student.StudentPaperService;
-import com.yb.onlineexamserver.vo.StudentPaperDetailVo;
-import com.yb.onlineexamserver.vo.StudentPaperListVo;
-import com.yb.onlineexamserver.vo.StudentPaperWrongVo;
-import com.yb.onlineexamserver.vo.StudentWrongDetailVo;
+import com.yb.onlineexamserver.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -50,5 +47,11 @@ public class StudentPaperController {
     public CommonResult queryPaperWrongDetailByExamId(@PathVariable("id") Integer examId){
         StudentWrongDetailVo studentWrongDetailVo = studentPaperService.queryPaperWrongDetailByExamId(examId);
         return CommonResult.success(studentWrongDetailVo);
+    }
+
+    @GetMapping("/student/paper")
+    public CommonResult queryPaperByKeyword(@RequestParam(value = "keyword") String keyword){
+        List<PaperVo> paperVoList =  studentPaperService.queryPaperByKeyword(keyword);
+        return CommonResult.success(paperVoList);
     }
 }

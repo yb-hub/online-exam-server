@@ -1,10 +1,7 @@
 package com.yb.onlineexamserver.service.student;
 
 import com.yb.onlineexamserver.requestparams.student.SubmittedPaperParams;
-import com.yb.onlineexamserver.vo.StudentPaperDetailVo;
-import com.yb.onlineexamserver.vo.StudentPaperListVo;
-import com.yb.onlineexamserver.vo.StudentPaperWrongVo;
-import com.yb.onlineexamserver.vo.StudentWrongDetailVo;
+import com.yb.onlineexamserver.vo.*;
 
 import java.util.List;
 
@@ -18,6 +15,8 @@ public interface StudentPaperService {
     List<StudentPaperWrongVo> queryPaperWrongByStudentId(String studentId,Integer courseId);
 
     StudentWrongDetailVo queryPaperWrongDetailByExamId(Integer examId);
+
+    List<PaperVo> queryPaperByKeyword(String keyword);
 
 //    StudentPaperResultVo queryPaperResult(SubmittedPaperParams submittedPaper);
 }

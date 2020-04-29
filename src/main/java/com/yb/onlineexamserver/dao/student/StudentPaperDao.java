@@ -19,4 +19,6 @@ public interface StudentPaperDao {
     List<StudentPaperWrongVo> queryPaperWrongByStudentId(String studentId,Integer courseId);
 
     StudentWrongDetailDto queryPaperWrongDetailByExamId(Integer examId);
+
+    List<PaperVo> queryPaperByKeyword(String keyword);
 }

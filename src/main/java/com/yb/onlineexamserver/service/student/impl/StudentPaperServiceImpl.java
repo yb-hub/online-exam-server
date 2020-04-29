@@ -8,6 +8,7 @@ import com.yb.onlineexamserver.dto.ExamResultDto;
 import com.yb.onlineexamserver.dto.PaperDetailDto;
 import com.yb.onlineexamserver.dto.QuestionOption;
 import com.yb.onlineexamserver.dto.StudentWrongDetailDto;
+import com.yb.onlineexamserver.mbg.mapper.PaperMapper;
 import com.yb.onlineexamserver.mbg.model.Question;
 import com.yb.onlineexamserver.requestparams.student.SubmittedPaperParams;
 import com.yb.onlineexamserver.service.student.StudentPaperService;
@@ -163,5 +164,10 @@ public class StudentPaperServiceImpl implements StudentPaperService {
         studentWrongDetailVo.setPaperId(studentWrongDetailDto.getPaperId());
         studentWrongDetailVo.setPaperTitle(studentWrongDetailDto.getPaperTitle());
         return studentWrongDetailVo;
+    }
+
+    @Override
+    public List<PaperVo> queryPaperByKeyword(String keyword) {
+        return studentPaperDao.queryPaperByKeyword(keyword);
     }
 }

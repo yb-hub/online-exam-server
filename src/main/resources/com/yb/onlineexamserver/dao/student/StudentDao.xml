@@ -30,4 +30,10 @@
         set password = #{newPassword}
         where student_id = #{studentId}
     </update>
+
+    <update id="updateStudent">
+        update student
+        set is_delete = #{status}
+        where student_id = #{studentId}
+    </update>
 </mapper>

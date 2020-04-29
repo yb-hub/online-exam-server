@@ -1,4 +1,4 @@
-package com.yb.onlineexamserver.common.enums.studentenums;
+package com.yb.onlineexamserver.common.enums.teacherenums;
 
 import com.yb.onlineexamserver.common.enums.IErrorCode;
 import lombok.AllArgsConstructor;
@@ -11,9 +11,8 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-public enum StudentEnums implements IErrorCode {
-    STUDENT_NOT_FOUND(601,"用户不存在"),
-    STUDENT_IS_EXIST(602,"学生已存在");
+public enum TeacherEnums implements IErrorCode {
+    TEACHER_NOT_FOUND(404,"用户不存在");
     private int code;
     private String message;
 }

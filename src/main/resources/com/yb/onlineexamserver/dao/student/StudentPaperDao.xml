@@ -101,4 +101,9 @@
         where exam.id = #{examId}
         and paper.id = exam.paper_id
     </select>
+    <select id="queryPaperByKeyword" resultType="com.yb.onlineexamserver.vo.PaperVo">
+        select *
+        from paper
+        where paper.title like concat('%',#{keyword},'%')
+    </select>
 </mapper>
