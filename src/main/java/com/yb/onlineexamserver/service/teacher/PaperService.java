@@ -2,6 +2,7 @@ package com.yb.onlineexamserver.service.teacher;
 
 import com.yb.onlineexamserver.requestparams.PaperParams;
 import com.yb.onlineexamserver.vo.PaperDetailVo;
+import com.yb.onlineexamserver.vo.PaperSimpleVo;
 import com.yb.onlineexamserver.vo.PaperVo;
 
 import java.util.List;
@@ -12,11 +13,14 @@ import java.util.List;
  * @Description:
  */
 public interface PaperService {
-    int insertPaper(PaperParams paperParams);
+    void insertPaper(PaperParams paperParams);
 
     List<PaperVo> queryPaperList(String keyWord, Integer courseId, Integer page, Integer pageSize, String sort);
 
     int deletePaper(Integer id);
 
     PaperDetailVo queryPaperById(Integer id);
+
+    List<PaperSimpleVo> queryPaperSimpleList();
+
 }

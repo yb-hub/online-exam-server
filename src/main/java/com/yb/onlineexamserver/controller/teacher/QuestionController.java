@@ -1,5 +1,6 @@
 package com.yb.onlineexamserver.controller.teacher;
 
+import com.github.pagehelper.Page;
 import com.yb.onlineexamserver.common.enums.OnlineExamExceptionEnum;
 import com.yb.onlineexamserver.common.enums.statusenums.QuestionEnums;
 import com.yb.onlineexamserver.common.exception.OnlineExamException;
@@ -74,8 +75,8 @@ public class QuestionController {
                                            @RequestParam(value = "page",defaultValue = "1") Integer page,
                                            @RequestParam(value = "pageSize",defaultValue = "10") Integer pageSize,
                                            @RequestParam(value = "sort",defaultValue = "update_time") String sort){
-        List<QuestionVo> questionVos = questionService.queryQuestionsList(keyWord,courseId,page,pageSize,sort);
-        return CommonResult.success(questionVos);
+        Page<QuestionVo> questionVos = questionService.queryQuestionsList(keyWord,courseId,page,pageSize,sort);
+        return CommonResult.successList(questionVos);
     }
 
     @PostMapping("/questions/elasticsearch")

@@ -2,6 +2,7 @@ package com.yb.onlineexamserver.service.teacher.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.alibaba.fastjson.JSON;
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.yb.onlineexamserver.common.enums.courseenums.CourseEnums;
 import com.yb.onlineexamserver.common.enums.questionenums.QuestionEnums;
@@ -19,6 +20,7 @@ import com.yb.onlineexamserver.respository.QuestionRepository;
 import com.yb.onlineexamserver.service.teacher.QuestionService;
 import com.yb.onlineexamserver.utils.KeyUtils;
 import com.yb.onlineexamserver.vo.QuestionVo;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -88,10 +90,11 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public List<QuestionVo> queryQuestionsList(String keyWord, Integer courseId, Integer page, Integer pageSize, String sort) {
+    public Page<QuestionVo> queryQuestionsList(String keyWord, Integer courseId, Integer page, Integer pageSize, String sort) {
         PageHelper.startPage(page, pageSize);
-        List<QuestionDto> questionDtos = questionDao.queryQuestionsList(keyWord, courseId, page, pageSize, sort);
-        ArrayList<QuestionVo> questionVos = new ArrayList<>();
+        Page<QuestionDto> questionDtos = (Page<QuestionDto>) questionDao.queryQuestionsList(keyWord, courseId, page, pageSize, sort);
+        Page<QuestionVo> questionVos = new Page<>();
+        BeanUtils.copyProperties(questionDtos,questionVos);
         for (QuestionDto questionDto : questionDtos) {
             String options = questionDto.getOptions();
             List<QuestionOption> questionOptions = JSON.parseArray(options, QuestionOption.class);

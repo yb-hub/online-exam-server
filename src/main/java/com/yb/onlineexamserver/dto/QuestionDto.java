@@ -20,6 +20,8 @@ public class QuestionDto {
     @Field(type = FieldType.Keyword)
     private Integer courseId;
 
+    private String courseName;
+
     @Field(type = FieldType.Text,analyzer = "ik_max_word")
     private String title;
 
@@ -30,6 +32,8 @@ public class QuestionDto {
     private String rightOption;
 
     private Integer judgeAnswer;
+
+    private Long difficultyDegree;
 
     private Integer score;
 

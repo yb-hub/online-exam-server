@@ -40,4 +40,8 @@
         on pq.question_id = question.id
         where paper.id = #{id}
     </select>
+    <select id="queryPaperSimpleList" resultType="com.yb.onlineexamserver.vo.PaperSimpleVo">
+        select paper.id paperId,paper.title paperTitle
+        from paper
+    </select>
 </mapper>

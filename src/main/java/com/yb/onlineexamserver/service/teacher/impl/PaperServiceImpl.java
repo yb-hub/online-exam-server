@@ -19,6 +19,7 @@ import com.yb.onlineexamserver.requestparams.PaperParams;
 import com.yb.onlineexamserver.service.teacher.PaperService;
 import com.yb.onlineexamserver.utils.PaperLimitTimeUtils;
 import com.yb.onlineexamserver.vo.PaperDetailVo;
+import com.yb.onlineexamserver.vo.PaperSimpleVo;
 import com.yb.onlineexamserver.vo.PaperVo;
 import com.yb.onlineexamserver.vo.QuestionVo;
 import org.springframework.beans.BeanUtils;
@@ -66,7 +67,7 @@ public class PaperServiceImpl implements PaperService {
 
     @Override
     @Transactional
-    public int insertPaper(PaperParams paperParams) {
+    public void insertPaper(PaperParams paperParams) {
         PaperDto fitnessPaper = new PaperDto();
         //BeanUtil.copyProperties(paperParams,fitnessPaper);
         //创建一个种群
@@ -77,6 +78,8 @@ public class PaperServiceImpl implements PaperService {
             Integer totalSingleChoice = paperParams.getTotalSingleChoice();
             Integer totalMultiChoice = paperParams.getTotalMultiChoice();
             Integer totalJudgeChoice = paperParams.getTotalJudgeChoice();
+            //此处可能因为题目数量不足而报错
+            //todo:需要根据不同课程来选取不同的题目
             List<Question> singleList = questionDao.queryLimitQuestionByType(QuestionEnums.SIMPLE_QUESTION.getCode(), totalSingleChoice);
             List<Question> multiList = questionDao.queryLimitQuestionByType(QuestionEnums.MULTI_QUESTION.getCode(), totalMultiChoice);
             List<Question> judgeList = questionDao.queryLimitQuestionByType(QuestionEnums.JUDGE_QUESTION.getCode(), totalJudgeChoice);
@@ -97,6 +100,7 @@ public class PaperServiceImpl implements PaperService {
             paper.setQuestionList(questions);
             papers.add(paper);
         }
+        //遍历试卷集群，根据题目计算试卷难度
         papers = (ArrayList<PaperDto>) papers.stream().map(paper -> {
             paper.setDifficultyDegree();
             return paper;
@@ -140,7 +144,7 @@ public class PaperServiceImpl implements PaperService {
                 }
 
                 //开始变异
-                for (Question question : newPaper.getQuestionList())
+                for (Question question : newPaper.getQuestionList()) {
                     if (new Random().nextFloat() < mutationRate) {
                         //这里开始变异了
                         Integer type = question.getType();
@@ -150,9 +154,9 @@ public class PaperServiceImpl implements PaperService {
                         nullQuestions.add(question);
                         question = Optional.ofNullable(questions).orElse(nullQuestions).get(0);
                     }
-                newPaper.setDifficultyDegree();
-                newPaperList.add(newPaper);
-            }
+                    newPaper.setDifficultyDegree();
+                    newPaperList.add(newPaper);
+                }
 //            for (PaperDto paperDto : newPaperList) {
 //                System.out.println("==============");
 //                System.out.println("试卷难度："+paperDto.getDifficultyDegree());
@@ -160,36 +164,38 @@ public class PaperServiceImpl implements PaperService {
 //                    System.out.println(question.getTitle());
 //                }
 //            }
-            fitnessPaper = getFitness(newPaperList, paperParams.getDifficultyDegree());
-            for (Question question : fitnessPaper.getQuestionList()) {
-                System.out.println("标题：" + question.getTitle());
-                System.out.println("类型：" + question.getType());
+                fitnessPaper = getFitness(newPaperList, paperParams.getDifficultyDegree());
+                for (Question question : fitnessPaper.getQuestionList()) {
+                    System.out.println("标题：" + question.getTitle());
+                    System.out.println("类型：" + question.getType());
+                }
+                System.out.println("进化次数：" + i + "难度：" + fitnessPaper.getDifficultyDegree());
             }
-            System.out.println("进化次数：" + i + "难度：" + fitnessPaper.getDifficultyDegree());
         }
-        //将试卷存入数据库中
-        Paper paper = new Paper();
-        //BeanUtil.copyProperties(paperParams,paper);
-        // BeanUtils.copyProperties(paperParams, fitnessPaper);
-        BeanUtils.copyProperties(paperParams, paper);
-        paper.setLimitTime(PaperLimitTimeUtils.TimeToMinute(paperParams.getLimitTime()));
-        paper.setCreateTime(LocalDateTime.now());
-        paper.setUpdateTime(LocalDateTime.now());
-        paperMapper.insertSelective(paper);
-        //将生成试题和试卷关系表
-        Integer paperId = paper.getId();
-        List<String> questionIdList = fitnessPaper.getQuestionList().stream()
-                .map(question -> question.getId()).collect(Collectors.toList());
-        return paperQuestionDao.insertPaperQuestions(paperId, questionIdList);
+            //将试卷存入数据库中
+            Paper paper = new Paper();
+            //BeanUtil.copyProperties(paperParams,paper);
+            // BeanUtils.copyProperties(paperParams, fitnessPaper);
+            BeanUtils.copyProperties(paperParams, paper);
+            paper.setLimitTime(PaperLimitTimeUtils.TimeToMinute(paperParams.getLimitTime()));
+            paper.setCreateTime(LocalDateTime.now());
+            paper.setUpdateTime(LocalDateTime.now());
+            paper.setStatus(0);
+            paperMapper.insertSelective(paper);
+            //将生成试题和试卷关系表
+            Integer paperId = paper.getId();
+            List<String> questionIdList = fitnessPaper.getQuestionList().stream()
+                    .map(question -> question.getId()).collect(Collectors.toList());
+            paperQuestionDao.insertPaperQuestions(paperId, questionIdList);
     }
 
-    private PaperDto selectParentPaper(ArrayList<PaperDto> papers) {
+    private PaperDto selectParentPaper (ArrayList < PaperDto > papers) {
         Random random = new Random();
         int randowNumber = random.nextInt(papers.size());
         return papers.get(randowNumber);
     }
 
-    private PaperDto getFitness(ArrayList<PaperDto> papers, Double difficultyDegree) {
+    private PaperDto getFitness (ArrayList < PaperDto > papers, Double difficultyDegree){
         if (papers.size() >= 1) {
             PaperDto fitnessPaper = papers.get(0);
             Double degreeDifference = Math.abs(difficultyDegree - fitnessPaper.getDifficultyDegree());
@@ -208,7 +214,8 @@ public class PaperServiceImpl implements PaperService {
     }
 
     @Override
-    public List<PaperVo> queryPaperList(String keyWord, Integer courseId, Integer page, Integer pageSize, String sort) {
+    public List<PaperVo> queryPaperList (String keyWord, Integer courseId, Integer page, Integer pageSize, String
+    sort){
         PaperExample example = new PaperExample();
         PaperExample.Criteria criteria = example.createCriteria();
         if (!StringUtils.isEmpty(keyWord)) {
@@ -232,29 +239,33 @@ public class PaperServiceImpl implements PaperService {
         return paperVoList;
     }
 
+
     @Override
-    public PaperDetailVo queryPaperById(Integer id) {
+    public List<PaperSimpleVo> queryPaperSimpleList () {
+        return paperDao.queryPaperSimpleList();
+    }
+
+    @Override
+    public PaperDetailVo queryPaperById (Integer id){
         PaperDetailDto paperDetailDto = paperDao.queryPaperById(id);
         PaperDetailVo paperDetailVo = new PaperDetailVo();
-        BeanUtils.copyProperties(paperDetailDto,paperDetailVo);
+        BeanUtils.copyProperties(paperDetailDto, paperDetailVo);
         List<Question> totalQuestionList = paperDetailDto.getTotalQuestionList();
         paperDetailVo.setSingleChoiceList(new ArrayList<>());
         paperDetailVo.setMultiChoiceList(new ArrayList<>());
         paperDetailVo.setJudgeChoiceList(new ArrayList<>());
         for (Question question : totalQuestionList) {
             List<QuestionOption> questionOptions = JSON.parseArray(question.getOptions(), QuestionOption.class);
-            List<String> rightOptions = JSON.parseArray(question.getRightOption(),String.class);
+            List<String> rightOptions = JSON.parseArray(question.getRightOption(), String.class);
             QuestionVo questionVo = new QuestionVo();
             BeanUtils.copyProperties(question, questionVo);
             questionVo.setOptions(questionOptions);
             questionVo.setRightOption(rightOptions);
-            if(question.getType() == QuestionEnums.SIMPLE_QUESTION.getCode()){
+            if (question.getType() == QuestionEnums.SIMPLE_QUESTION.getCode()) {
                 paperDetailVo.getSingleChoiceList().add(questionVo);
-            }
-            else if(question.getType() == QuestionEnums.MULTI_QUESTION.getCode()){
+            } else if (question.getType() == QuestionEnums.MULTI_QUESTION.getCode()) {
                 paperDetailVo.getMultiChoiceList().add(questionVo);
-            }
-            else if(question.getType() == QuestionEnums.JUDGE_QUESTION.getCode()){
+            } else if (question.getType() == QuestionEnums.JUDGE_QUESTION.getCode()) {
                 paperDetailVo.getJudgeChoiceList().add(questionVo);
             }
         }
@@ -269,3 +280,4 @@ public class PaperServiceImpl implements PaperService {
         return paperQuestionDao.deleteByPaperId(id);
     }
 }
+

@@ -17,6 +17,8 @@ public class QuestionVo {
 
     private Integer courseId;
 
+    private String courseName;
+
     private String title;
 
     private Integer type;

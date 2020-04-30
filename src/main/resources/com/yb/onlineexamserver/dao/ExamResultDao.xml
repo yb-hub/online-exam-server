@@ -19,4 +19,21 @@
             </if>
         </where>
     </select>
+    <select id="queryExamresultChartData" resultType="com.yb.onlineexamserver.vo.ExamResultChartVo">
+        select
+        ex.paper_id paperId,
+        ex.student_id studentId,
+        ex.total_score totalScore,
+        ex.right_single rightSingle,
+        ex.right_multi rightMulti,
+        ex.right_judge rightJudge,
+        student.name studentName,
+        paper.title paperTitle
+        from exam_result ex
+        left join student
+        on student.student_id = ex.student_id
+        left join paper
+        on paper.id = ex.paper_id
+        where ex.paper_id = #{paperId}
+    </select>
 </mapper>
