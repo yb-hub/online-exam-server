@@ -29,7 +29,7 @@ public class PaperVo{
 
     private Integer totalScore;
 
-    private Long difficultyDegree;
+    private Double difficultyDegree;
 
     private LocalDateTime updateTime;
 
