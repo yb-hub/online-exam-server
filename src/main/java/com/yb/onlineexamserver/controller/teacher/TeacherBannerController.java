@@ -6,7 +6,7 @@ import com.yb.onlineexamserver.service.teacher.TeacherBannerService;
 import com.yb.onlineexamserver.utils.FileUploadUtils;
 import com.yb.onlineexamserver.vo.BannerVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.elasticsearch.annotations.MultiField;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;

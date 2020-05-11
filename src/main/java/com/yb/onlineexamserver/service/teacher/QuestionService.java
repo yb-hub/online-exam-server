@@ -25,7 +25,7 @@ public interface QuestionService {
     Page<QuestionVo> queryQuestionsList(String keyWord, Integer courseId, Integer page, Integer pageSize, String sort
     );
 
-    void insertToElastic();
+//    void insertToElastic();
 
     int insertQuestionsList(List<Question> questionList);
 

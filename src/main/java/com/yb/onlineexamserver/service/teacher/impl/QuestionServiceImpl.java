@@ -16,7 +16,6 @@ import com.yb.onlineexamserver.mbg.model.Course;
 import com.yb.onlineexamserver.mbg.model.Question;
 import com.yb.onlineexamserver.mbg.model.QuestionExample;
 import com.yb.onlineexamserver.requestparams.QuestionParam;
-import com.yb.onlineexamserver.respository.QuestionRepository;
 import com.yb.onlineexamserver.service.teacher.QuestionService;
 import com.yb.onlineexamserver.utils.KeyUtils;
 import com.yb.onlineexamserver.vo.QuestionVo;
@@ -42,8 +41,8 @@ public class QuestionServiceImpl implements QuestionService {
     @Autowired
     private QuestionDao questionDao;
 
-    @Autowired
-    private QuestionRepository questionRepository;
+//    @Autowired
+//    private QuestionRepository questionRepository;
 
     @Override
     public int insertQuestions(QuestionParam questionParam) {
@@ -117,17 +116,17 @@ public class QuestionServiceImpl implements QuestionService {
 //    }
 
 
-    @Override
-    public void insertToElastic() {
-        List<Question> questions = questionMapper.selectByExample(new QuestionExample());
-        ArrayList<QuestionDto> questionDtos = new ArrayList<>();
-        for (Question question : questions) {
-            QuestionDto questionDto = new QuestionDto();
-            BeanUtil.copyProperties(question, questionDto);
-            questionDtos.add(questionDto);
-        }
-        questionRepository.saveAll(questionDtos);
-    }
+//    @Override
+//    public void insertToElastic() {
+//        List<Question> questions = questionMapper.selectByExample(new QuestionExample());
+//        ArrayList<QuestionDto> questionDtos = new ArrayList<>();
+//        for (Question question : questions) {
+//            QuestionDto questionDto = new QuestionDto();
+//            BeanUtil.copyProperties(question, questionDto);
+//            questionDtos.add(questionDto);
+//        }
+//        questionRepository.saveAll(questionDtos);
+//    }
 
     public void checkCourse(int courseId){
         Course course = courseMapper.selectByPrimaryKey(courseId);

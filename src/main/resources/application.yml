@@ -20,10 +20,10 @@ spring:
       test-while-idle:  true
       time-between-eviction-runs-millis:  60000
       filters:  stat,wall
-  data:
-    elasticsearch:
-      cluster-name: docker-cluster
-      cluster-nodes: 47.99.193.37:9300
+#  data:
+#    elasticsearch:
+#      cluster-name: docker-cluster
+#      cluster-nodes: 47.99.193.37:9300
   servlet:
     multipart:
       max-file-size: 10MB

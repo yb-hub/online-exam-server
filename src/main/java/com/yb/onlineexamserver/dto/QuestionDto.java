@@ -1,10 +1,7 @@
 package com.yb.onlineexamserver.dto;
 
 import lombok.Data;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.elasticsearch.annotations.Document;
-import org.springframework.data.elasticsearch.annotations.Field;
-import org.springframework.data.elasticsearch.annotations.FieldType;
+
 
 /**
  * @Auther: Yang
@@ -12,21 +9,21 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
  * @Description:
  */
 @Data
-@Document(indexName = "onlineexam",type ="question")
+//@Document(indexName = "onlineexam",type ="question")
 public class QuestionDto {
-    @Id
+    //@Id
     private String id;
 
-    @Field(type = FieldType.Keyword)
+    //@Field(type = FieldType.Keyword)
     private Integer courseId;
 
     private String courseName;
 
-    @Field(type = FieldType.Text,analyzer = "ik_max_word")
+    //@Field(type = FieldType.Text,analyzer = "ik_max_word")
     private String title;
 
     private Integer type;
-    @Field(type = FieldType.Text,analyzer = "ik_max_word")
+   // @Field(type = FieldType.Text,analyzer = "ik_max_word")
     private String options;
 
     private String rightOption;

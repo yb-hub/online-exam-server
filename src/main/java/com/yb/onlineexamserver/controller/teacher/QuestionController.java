@@ -79,11 +79,11 @@ public class QuestionController {
         return CommonResult.successList(questionVos);
     }
 
-    @PostMapping("/questions/elasticsearch")
-    public CommonResult insertToElastic(){
-        questionService.insertToElastic();
-        return CommonResult.success();
-    }
+//    @PostMapping("/questions/elasticsearch")
+//    public CommonResult insertToElastic(){
+//        questionService.insertToElastic();
+//        return CommonResult.success();
+//    }
 
 
     private void validate(QuestionParam questionParam) {

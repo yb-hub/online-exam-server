@@ -2,7 +2,7 @@ package com.yb.onlineexamserver.respository;
 
 import com.yb.onlineexamserver.dto.QuestionDto;
 import com.yb.onlineexamserver.mbg.model.Question;
-import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
+
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ import java.util.List;
  * @Date: 2019/11/18 11:14
  * @Description:
  */
-public interface QuestionRepository extends ElasticsearchRepository<QuestionDto,String> {
-   //List<QuestionDto> findByTitleLike(String keyWord);
-   List<QuestionDto> findByTitleLikeAndCourseId(String keyWord,Integer courseId);
-}
+//public interface QuestionRepository extends ElasticsearchRepository<QuestionDto,String> {
+//   //List<QuestionDto> findByTitleLike(String keyWord);
+//   List<QuestionDto> findByTitleLikeAndCourseId(String keyWord,Integer courseId);
+//}
