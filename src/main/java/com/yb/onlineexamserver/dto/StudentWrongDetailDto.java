@@ -22,4 +22,6 @@ public class StudentWrongDetailDto {
     private String multiAnswer;
 
     private String judgeAnswer;
+
+    private Integer totalQuestion;
 }

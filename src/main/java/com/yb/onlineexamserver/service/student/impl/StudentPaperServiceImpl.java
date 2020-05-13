@@ -163,6 +163,7 @@ public class StudentPaperServiceImpl implements StudentPaperService {
         studentWrongDetailVo.setExamId(studentWrongDetailDto.getExamId());
         studentWrongDetailVo.setPaperId(studentWrongDetailDto.getPaperId());
         studentWrongDetailVo.setPaperTitle(studentWrongDetailDto.getPaperTitle());
+        studentWrongDetailVo.setTotalQuestion(studentWrongDetailDto.getTotalQuestion());
         return studentWrongDetailVo;
     }
 

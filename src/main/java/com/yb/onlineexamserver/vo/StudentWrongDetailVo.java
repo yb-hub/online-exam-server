@@ -30,4 +30,6 @@ public class StudentWrongDetailVo {
     private List<QuestionVo> multiChoiceList;
 
     private List<QuestionVo> judgeChoiceList;
+
+    private Integer totalQuestion;
 }

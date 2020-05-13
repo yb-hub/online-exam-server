@@ -96,7 +96,8 @@
         exam.single_answer singleAnswer,
         exam.multi_answer multiAnswer,
         exam.judge_answer judgeAnswer,
-        paper.title paperTitle
+        paper.title paperTitle,
+        paper.total_question totalQuestion
         from exam_result exam,paper
         where exam.id = #{examId}
         and paper.id = exam.paper_id
